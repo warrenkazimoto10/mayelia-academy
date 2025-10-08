@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import { Award, Users, Target, Heart, TrendingUp, BookOpen } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import aboutHero from '@/assets/about-hero.jpg';
+import aboutStatsImage from '@/assets/about-stats-replacement.jpg';
 
 const Apropos = () => {
   const values = [
@@ -90,28 +91,13 @@ const Apropos = () => {
               </div>
               <div className="relative animate-fade-in" style={{ animationDelay: '200ms' }}>
                 <div className="absolute -inset-4 bg-gradient-primary rounded-3xl opacity-20 blur-2xl"></div>
-                <Card className="relative border-border shadow-2xl overflow-hidden">
-                  <CardContent className="p-8">
-                    <div className="grid grid-cols-2 gap-6">
-                      <div className="text-center p-4 bg-muted/50 rounded-xl">
-                        <div className="text-4xl font-poppins font-bold text-primary mb-2">500+</div>
-                        <div className="text-sm font-opensans text-muted-foreground">Diplômés</div>
-                      </div>
-                      <div className="text-center p-4 bg-muted/50 rounded-xl">
-                        <div className="text-4xl font-poppins font-bold text-primary mb-2">95%</div>
-                        <div className="text-sm font-opensans text-muted-foreground">Insertion pro</div>
-                      </div>
-                      <div className="text-center p-4 bg-muted/50 rounded-xl">
-                        <div className="text-4xl font-poppins font-bold text-primary mb-2">4</div>
-                        <div className="text-sm font-opensans text-muted-foreground">Domaines</div>
-                      </div>
-                      <div className="text-center p-4 bg-muted/50 rounded-xl">
-                        <div className="text-4xl font-poppins font-bold text-primary mb-2">50+</div>
-                        <div className="text-sm font-opensans text-muted-foreground">Entreprises partenaires</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                  <img 
+                    src={aboutStatsImage} 
+                    alt="Formation professionnelle Mayelia Academy" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -152,7 +138,48 @@ const Apropos = () => {
           </div>
         </section>
 
-        {/* Stats Section - Removed as per request */}
+        {/* Objectifs Section */}
+        <section className="py-24 bg-gradient-to-br from-background via-background to-muted/20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-poppins font-bold text-primary mb-4">
+                  NOS OBJECTIFS
+                </h2>
+              </div>
+              <Card className="border-border shadow-xl">
+                <CardContent className="p-8 md:p-12">
+                  <ul className="space-y-4 text-foreground font-opensans text-lg leading-relaxed">
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary font-bold mt-1">•</span>
+                      <span>L'adaptation aux nouvelles technologies</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary font-bold mt-1">•</span>
+                      <span>La mise en adéquation entre les formations de base et les emplois disponibles</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary font-bold mt-1">•</span>
+                      <span>L'acquisition de compétences spécialisées</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary font-bold mt-1">•</span>
+                      <span>Le recyclage et formations continues</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary font-bold mt-1">•</span>
+                      <span>L'amélioration des compétences pour faciliter l'insertion professionnelle des jeunes</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-primary font-bold mt-1">•</span>
+                      <span>L'accompagnement du gouvernement dans la mise en œuvre de son projet relatif à la formation conformément au Plan National de Développement (PND)</span>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

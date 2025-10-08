@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import ContactComponent from '@/components/Contact';
 import { MapPin, Mail, Phone } from 'lucide-react';
 import contactHero from '@/assets/contact-hero.jpg';
+import contactContent from '@/assets/contact-content.jpg';
 
 const Contact = () => {
   return (
@@ -36,8 +37,24 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Contact Form Section */}
-        <ContactComponent />
+        {/* Contact Section */}
+        <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
+          <div className="container mx-auto px-4">
+            {/* Image Section */}
+            <div className="max-w-6xl mx-auto mb-16">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                <img 
+                  src={contactContent} 
+                  alt="Service client professionnel Mayelia Academy" 
+                  className="w-full h-[400px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+              </div>
+            </div>
+            
+            <ContactComponent />
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import faqHero from '@/assets/faq-hero.jpg';
+import faqContent from '@/assets/faq-content.jpg';
 
 const FAQ = () => {
   const faqs = [
@@ -87,6 +88,18 @@ const FAQ = () => {
         {/* FAQ Section */}
         <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
           <div className="container mx-auto px-4">
+            {/* Image Section */}
+            <div className="max-w-6xl mx-auto mb-16">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                <img 
+                  src={faqContent} 
+                  alt="Centre d'aide Mayelia Academy" 
+                  className="w-full h-[400px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+              </div>
+            </div>
+            
             <div className="max-w-4xl mx-auto">
               <div className="mb-12 text-center">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
