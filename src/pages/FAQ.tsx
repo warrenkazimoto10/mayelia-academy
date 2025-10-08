@@ -1,12 +1,13 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { HelpCircle } from 'lucide-react';
+import { HelpCircle, Info } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import faqHero from '@/assets/faq-hero.jpg';
 
 const FAQ = () => {
   const faqs = [
@@ -58,7 +59,16 @@ const FAQ = () => {
       <main>
         {/* Hero Section */}
         <section className="relative py-32 bg-gradient-to-br from-secondary via-secondary/95 to-primary/20 overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={faqHero}
+              alt="Questions fréquentes - Mayelia Academy"
+              className="w-full h-full object-cover opacity-15"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/90 to-transparent"></div>
+          </div>
           <div className="absolute inset-0 bg-grid-white/10"></div>
+          <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in">
               <div className="w-20 h-20 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6">
@@ -75,9 +85,18 @@ const FAQ = () => {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-24 bg-background">
+        <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
+              <div className="mb-12 text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
+                  <Info className="w-5 h-5 text-primary" />
+                  <span className="text-primary font-opensans text-sm font-medium">Centre d'aide</span>
+                </div>
+                <p className="text-muted-foreground font-opensans">
+                  Trouvez rapidement les réponses à vos questions les plus courantes
+                </p>
+              </div>
               <Accordion type="single" collapsible className="space-y-4">
                 {faqs.map((faq, index) => (
                   <AccordionItem
@@ -100,7 +119,7 @@ const FAQ = () => {
         </section>
 
         {/* Contact CTA */}
-        <section className="py-24 bg-muted/30">
+        <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground mb-6">
               Vous ne trouvez pas votre réponse ?

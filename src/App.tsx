@@ -9,6 +9,7 @@ import Formations from "./pages/Formations";
 import BlogPage from "./pages/BlogPage";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
+import RendezVous from "./pages/RendezVous";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/rendez-vous" element={<RendezVous />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

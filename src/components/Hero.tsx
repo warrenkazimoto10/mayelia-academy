@@ -52,7 +52,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-lg md:text-xl text-primary-foreground/90 font-opensans mb-8 max-w-2xl animate-fade-in">
-            Mayelia Academy vous offre des formations d'excellence en Automobile, Informatique, Service Client et Santé au Travail. Rejoignez-nous pour transformer votre carrière.
+            Centre de formation d'excellence créé en 2023 par le Groupe Mayelia Participations. Nous accompagnons les particuliers et les entreprises dans le développement des compétences et la reconversion professionnelle.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 animate-scale-in">
@@ -72,34 +72,6 @@ const Hero = () => {
               <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               Voir la vidéo
             </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 mt-16 animate-fade-in">
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-poppins font-bold text-primary-foreground mb-2">
-                500+
-              </div>
-              <div className="text-sm md:text-base font-opensans text-primary-foreground/80">
-                Étudiants formés
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-poppins font-bold text-primary-foreground mb-2">
-                95%
-              </div>
-              <div className="text-sm md:text-base font-opensans text-primary-foreground/80">
-                Taux d'insertion
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-poppins font-bold text-primary-foreground mb-2">
-                4
-              </div>
-              <div className="text-sm md:text-base font-opensans text-primary-foreground/80">
-                Domaines d'expertise
-              </div>
-            </div>
           </div>
         </div>
       </div>

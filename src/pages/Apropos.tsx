@@ -1,7 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Award, Users, Target, Heart } from 'lucide-react';
+import { Award, Users, Target, Heart, TrendingUp, BookOpen } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import aboutHero from '@/assets/about-hero.jpg';
 
 const Apropos = () => {
   const values = [
@@ -33,7 +34,16 @@ const Apropos = () => {
       <main>
         {/* Hero Section */}
         <section className="relative py-32 bg-gradient-to-br from-secondary via-secondary/95 to-primary/20 overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={aboutHero}
+              alt="À propos de Mayelia Academy"
+              className="w-full h-full object-cover opacity-15"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/90 to-transparent"></div>
+          </div>
           <div className="absolute inset-0 bg-grid-white/10"></div>
+          <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in">
               <span className="inline-block px-4 py-2 bg-primary/10 rounded-full text-primary font-opensans text-sm font-medium mb-6">
@@ -42,35 +52,73 @@ const Apropos = () => {
               <h1 className="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">
                 Mayelia Academy
               </h1>
-              <p className="text-xl text-white/90 font-opensans leading-relaxed">
-                Un hub d'apprentissage moderne dédié à l'insertion professionnelle et au développement des compétences depuis 2023
+              <p className="text-xl text-white/90 font-opensans leading-relaxed max-w-3xl mx-auto">
+                Centre de formation d'excellence créé en 2023 par le Groupe Mayelia Participations. Nous constituons un hub d'apprentissage moderne dédié à l'insertion professionnelle et au développement des compétences.
               </p>
             </div>
           </div>
         </section>
 
         {/* Mission Section */}
-        <section className="py-24 bg-background">
+        <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground mb-8 text-center">
-                Notre Mission
-              </h2>
-              <p className="text-lg text-muted-foreground font-opensans leading-relaxed mb-6 text-center">
-                Mayelia Academy, créée en 2023, est la branche formation du Groupe Mayelia Participations. 
-                Nous constituons un hub d'apprentissage moderne, dédié à l'insertion professionnelle, 
-                au développement des compétences et à la reconversion des actifs.
-              </p>
-              <p className="text-lg text-muted-foreground font-opensans leading-relaxed text-center">
-                Chaque programme est conçu en partenariat avec des entreprises, animé par des experts certifiés 
-                et orienté emploi et performance.
-              </p>
+            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+              <div className="space-y-6 animate-fade-in">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  <span className="text-primary font-opensans text-sm font-medium">Notre Mission</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground">
+                  Former les talents de demain
+                </h2>
+                <p className="text-lg text-muted-foreground font-opensans leading-relaxed">
+                  Mayelia Academy est la branche formation du Groupe Mayelia Participations, créée en 2023 avec une vision claire : transformer l'éducation professionnelle en Guinée et au-delà.
+                </p>
+                <p className="text-lg text-muted-foreground font-opensans leading-relaxed">
+                  Nous constituons un hub d'apprentissage moderne, dédié à l'insertion professionnelle, au développement des compétences et à la reconversion des actifs. Chaque programme est conçu en partenariat avec des entreprises leaders, animé par des experts certifiés et orienté vers l'emploi et la performance.
+                </p>
+                <div className="flex items-center gap-4 pt-4">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                    <span className="font-opensans font-medium text-foreground">Croissance continue</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Award className="w-5 h-5 text-primary" />
+                    <span className="font-opensans font-medium text-foreground">Certifications reconnues</span>
+                  </div>
+                </div>
+              </div>
+              <div className="relative animate-fade-in" style={{ animationDelay: '200ms' }}>
+                <div className="absolute -inset-4 bg-gradient-primary rounded-3xl opacity-20 blur-2xl"></div>
+                <Card className="relative border-border shadow-2xl overflow-hidden">
+                  <CardContent className="p-8">
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="text-center p-4 bg-muted/50 rounded-xl">
+                        <div className="text-4xl font-poppins font-bold text-primary mb-2">500+</div>
+                        <div className="text-sm font-opensans text-muted-foreground">Diplômés</div>
+                      </div>
+                      <div className="text-center p-4 bg-muted/50 rounded-xl">
+                        <div className="text-4xl font-poppins font-bold text-primary mb-2">95%</div>
+                        <div className="text-sm font-opensans text-muted-foreground">Insertion pro</div>
+                      </div>
+                      <div className="text-center p-4 bg-muted/50 rounded-xl">
+                        <div className="text-4xl font-poppins font-bold text-primary mb-2">4</div>
+                        <div className="text-sm font-opensans text-muted-foreground">Domaines</div>
+                      </div>
+                      <div className="text-center p-4 bg-muted/50 rounded-xl">
+                        <div className="text-4xl font-poppins font-bold text-primary mb-2">50+</div>
+                        <div className="text-sm font-opensans text-muted-foreground">Entreprises partenaires</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Values Section */}
-        <section className="py-24 bg-muted/30">
+        <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground mb-4">
@@ -104,37 +152,7 @@ const Apropos = () => {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="py-24 bg-gradient-primary">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div className="animate-fade-in">
-                <div className="text-5xl md:text-6xl font-poppins font-bold text-primary-foreground mb-2">
-                  500+
-                </div>
-                <p className="text-primary-foreground/90 font-opensans text-lg">
-                  Étudiants formés
-                </p>
-              </div>
-              <div className="animate-fade-in" style={{ animationDelay: '100ms' }}>
-                <div className="text-5xl md:text-6xl font-poppins font-bold text-primary-foreground mb-2">
-                  95%
-                </div>
-                <p className="text-primary-foreground/90 font-opensans text-lg">
-                  Taux d'insertion
-                </p>
-              </div>
-              <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
-                <div className="text-5xl md:text-6xl font-poppins font-bold text-primary-foreground mb-2">
-                  4
-                </div>
-                <p className="text-primary-foreground/90 font-opensans text-lg">
-                  Domaines d'expertise
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Stats Section - Removed as per request */}
       </main>
       <Footer />
     </div>

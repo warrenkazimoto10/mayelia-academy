@@ -28,7 +28,7 @@ const Header = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-background/95 backdrop-blur-md shadow-md'
-          : 'bg-transparent'
+          : 'bg-background/98 backdrop-blur-sm shadow-sm'
       }`}
     >
       <div className="container mx-auto px-4">
@@ -60,16 +60,10 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
             <a 
-              href="/connexion"
-              className="font-opensans text-sm font-medium text-foreground hover:text-primary transition-colors"
+              href="/rendez-vous"
+              className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-opensans font-semibold hover:shadow-lg hover:scale-105 transition-all"
             >
-              Connexion
-            </a>
-            <a 
-              href="/inscription"
-              className="bg-primary text-primary-foreground px-6 py-2 rounded-lg font-opensans font-semibold hover:shadow-lg transition-all"
-            >
-              S'inscrire maintenant
+              Prendre rendez-vous
             </a>
           </div>
 
@@ -103,18 +97,11 @@ const Header = () => {
               ))}
               <div className="flex flex-col space-y-2 pt-4">
                 <a
-                  href="/connexion"
-                  className="w-full text-center py-2 font-opensans text-sm font-medium text-foreground hover:text-primary transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Connexion
-                </a>
-                <a
-                  href="/inscription"
+                  href="/rendez-vous"
                   className="w-full text-center bg-primary text-primary-foreground px-6 py-3 rounded-lg font-opensans font-semibold"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  S'inscrire maintenant
+                  Prendre rendez-vous
                 </a>
               </div>
             </nav>
