@@ -1,7 +1,14 @@
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Mail, Phone, MapPin, Clock, Send, HelpCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import FAQModal from './FAQModal';
 
 const Contact = () => {
+  const [isFAQOpen, setIsFAQOpen] = useState(false);
+  const [showFAQButton, setShowFAQButton] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
   const contactInfo = [
     {
       icon: <Phone className="w-6 h-6 text-primary" />,
@@ -18,7 +25,7 @@ const Contact = () => {
     {
       icon: <MapPin className="w-6 h-6 text-primary" />,
       title: 'Adresse',
-      details: 'Conakry, Guinée',
+      details: 'Abidjan, Côte d\'Ivoire',
       subdetails: 'Rendez-vous sur place',
     },
     {
@@ -29,12 +36,41 @@ const Contact = () => {
     },
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShowFAQButton(true);
+          } else {
+            setShowFAQButton(false);
+          }
+        });
+      },
+      { threshold: 0.2 } // Déclenche quand 20% de la section est visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section id="contact" className="py-24 bg-gradient-to-br from-muted/30 via-background to-muted/30 relative overflow-hidden">
+    <section
+      id="contact"
+      ref={sectionRef}
+      className="py-24 bg-gradient-to-br from-muted/30 via-background to-muted/30 relative overflow-hidden"
+    >
       {/* Decorative elements */}
       <div className="absolute top-20 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float"></div>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }}></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
           <span className="inline-block px-4 py-2 bg-primary/10 rounded-full text-primary font-opensans text-sm font-medium mb-4 animate-scale-in">
@@ -92,7 +128,7 @@ const Contact = () => {
                     placeholder="Votre nom complet"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block font-opensans font-semibold text-foreground mb-2">
                     Email *
@@ -104,7 +140,7 @@ const Contact = () => {
                     placeholder="votre.email@example.com"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block font-opensans font-semibold text-foreground mb-2">
                     Téléphone *
@@ -116,7 +152,7 @@ const Contact = () => {
                     placeholder="+224 XX XX XX XX"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block font-opensans font-semibold text-foreground mb-2">
                     Message *
@@ -128,7 +164,7 @@ const Contact = () => {
                     placeholder="Comment pouvons-nous vous aider ?"
                   ></textarea>
                 </div>
-                
+
                 <button
                   type="submit"
                   className="w-full bg-gradient-primary text-primary-foreground py-4 rounded-lg font-opensans font-bold text-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
@@ -141,6 +177,25 @@ const Contact = () => {
           </Card>
         </div>
       </div>
+
+      {/* Floating FAQ Button with Animation */}
+      <div
+        className={`fixed bottom-8 right-8 z-50 transition-all duration-700 transform ${showFAQButton ? 'translate-y-0 opacity-100 rotate-0' : 'translate-y-20 opacity-0 rotate-45'
+          }`}
+      >
+        <Button
+          onClick={() => setIsFAQOpen(true)}
+          className="h-16 w-16 rounded-full bg-primary hover:bg-primary/90 shadow-2xl flex items-center justify-center animate-bounce-slow"
+        >
+          <HelpCircle className="w-8 h-8 text-white" />
+        </Button>
+        {/* Tooltip/Label */}
+        <div className={`absolute -top-12 left-1/2 transform -translate-x-1/2 bg-foreground text-background text-xs font-bold py-1 px-3 rounded-full transition-opacity duration-500 ${showFAQButton ? 'opacity-100' : 'opacity-0'}`}>
+          FAQ
+        </div>
+      </div>
+
+      <FAQModal isOpen={isFAQOpen} onOpenChange={setIsFAQOpen} />
     </section>
   );
 };

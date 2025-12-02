@@ -45,7 +45,7 @@ const Formations = () => {
             Nos Formations
           </span>
           <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground mb-4">
-            Quatre pôles d'excellence
+            Quatre Domaines d’expertise.     
           </h2>
           <p className="text-lg text-muted-foreground font-opensans">
             Chaque programme est conçu en partenariat avec des entreprises, animé par des experts certifiés et orienté emploi et performance.

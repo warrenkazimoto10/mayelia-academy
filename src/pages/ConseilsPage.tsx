@@ -1,9 +1,9 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Blog from '@/components/Blog';
-import { BookOpen } from 'lucide-react';
+import Conseils from '@/components/Conseils';
+import { Lightbulb } from 'lucide-react';
 
-const BlogPage = () => {
+const ConseilsPage = () => {
   return (
     <div className="min-h-screen">
       <Header />
@@ -14,24 +14,30 @@ const BlogPage = () => {
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in">
               <div className="w-20 h-20 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6">
-                <BookOpen className="w-10 h-10 text-primary" />
+                <Lightbulb className="w-10 h-10 text-primary" />
               </div>
               <h1 className="text-5xl md:text-6xl font-poppins font-bold text-white mb-6">
-                Actualités
+                Conseils
               </h1>
               <p className="text-xl text-white/90 font-opensans leading-relaxed">
-                Découvrez nos articles, conseils et actualités sur la formation professionnelle
+                Bénéficiez de nos conseils d'experts pour réussir votre reconversion, développer vos compétences et exceller dans votre carrière.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Blog Section */}
-        <Blog />
+        {/* Conseils Section */}
+        <Conseils />
       </main>
       <Footer />
     </div>
   );
 };
 
-export default BlogPage;
+export default ConseilsPage;
+
+
+
+
+
+

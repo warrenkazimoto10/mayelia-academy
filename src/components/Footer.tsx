@@ -1,31 +1,29 @@
-import { Facebook, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Linkedin, Instagram, Mail, Phone, MapPin, ArrowRight, Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import logo from '@/assets/logo_mayelia.png';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   const footerLinks = {
     formations: [
-      { label: 'Automobile', href: '#' },
+      { label: 'Technicien Polyvalent', href: '#' },
+      { label: 'Chauffeur & Sécurité', href: '#' },
       { label: 'Informatique', href: '#' },
-      { label: 'Service Client', href: '#' },
-      { label: 'Santé & Sécurité', href: '#' },
+      { label: 'Santé & Sécurité (SST)', href: '#' },
+      { label: 'Relation Client', href: '#' },
     ],
-    academy: [
+    quickLinks: [
+      { label: 'Accueil', href: '/' },
       { label: 'À propos', href: '#apropos' },
-      { label: 'Notre équipe', href: '#' },
-      { label: 'Partenaires', href: '#' },
-      { label: 'Témoignages', href: '#temoignages' },
-    ],
-    support: [
-      { label: 'Centre d\'aide', href: '#' },
-      { label: 'FAQ', href: '#' },
+      { label: 'Actualités', href: '#actualites' },
       { label: 'Contact', href: '#contact' },
-      { label: 'Blog', href: '#blog' },
     ],
     legal: [
       { label: 'Mentions légales', href: '#' },
       { label: 'Politique de confidentialité', href: '#' },
-      { label: 'Conditions d\'utilisation', href: '#' },
-      { label: 'Cookies', href: '#' },
-    ],
+      { label: 'CGU', href: '#' },
+    ]
   };
 
   const socialLinks = [
@@ -35,126 +33,128 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-secondary text-secondary-foreground">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
-          {/* Logo & Description */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-poppins font-bold text-xl">M</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-poppins font-bold text-xl">Mayelia</span>
-                <span className="font-poppins text-xs text-primary">Academy</span>
-              </div>
+    <footer className="bg-[#0f172a] text-white pt-20 pb-10 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-secondary to-primary"></div>
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-secondary/10 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12 mb-16">
+
+          {/* Brand Column */}
+          <div className="space-y-6">
+            <div className="bg-white p-3 rounded-xl inline-block w-fit">
+              <img src={logo} alt="Mayelia Academy" className="h-10 w-auto" />
             </div>
-            <p className="font-opensans text-sm text-secondary-foreground/80 mb-6 max-w-sm">
-              Hub d'apprentissage moderne dédié à l'insertion professionnelle et au développement des compétences.
+            <p className="text-slate-400 font-opensans leading-relaxed">
+              Hub d'apprentissage moderne dédié à l'insertion professionnelle et au développement des compétences en Côte d'Ivoire.
             </p>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-primary" />
-                <span className="font-opensans">+224 XX XX XX XX</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-primary" />
-                <span className="font-opensans">contact@mayelia-academy.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-4 h-4 text-primary" />
-                <span className="font-opensans">Conakry, Guinée</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Formations */}
-          <div className="hidden md:block">
-            <h3 className="font-poppins font-semibold text-lg mb-4">Formations</h3>
-            <ul className="space-y-2">
-              {footerLinks.formations.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-opensans text-sm text-secondary-foreground/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Academy */}
-          <div className="hidden md:block">
-            <h3 className="font-poppins font-semibold text-lg mb-4">Académie</h3>
-            <ul className="space-y-2">
-              {footerLinks.academy.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-opensans text-sm text-secondary-foreground/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="font-poppins font-semibold text-lg mb-4">Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-opensans text-sm text-secondary-foreground/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h3 className="font-poppins font-semibold text-lg mb-4">Légal</h3>
-            <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-opensans text-sm text-secondary-foreground/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Social Links & Copyright */}
-        <div className="pt-8 border-t border-secondary-foreground/10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="font-opensans text-sm text-secondary-foreground/70">
-              © 2025 Mayelia Academy. Tous droits réservés.
-            </p>
-            <div className="flex space-x-4">
+            <div className="flex gap-4 pt-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1"
                 >
                   <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-poppins font-bold mb-6 flex items-center gap-2">
+              <span className="w-8 h-1 bg-primary rounded-full"></span>
+              Liens Rapides
+            </h3>
+            <ul className="space-y-4">
+              {footerLinks.quickLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-slate-400 hover:text-primary transition-colors flex items-center gap-2 group"
+                  >
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity -ml-6 group-hover:ml-0" />
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Formations */}
+          <div>
+            <h3 className="text-lg font-poppins font-bold mb-6 flex items-center gap-2">
+              <span className="w-8 h-1 bg-secondary rounded-full"></span>
+              Nos Formations
+            </h3>
+            <ul className="space-y-4">
+              {footerLinks.formations.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-slate-400 hover:text-secondary transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-secondary transition-colors"></span>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter & Contact */}
+          <div>
+            <h3 className="text-lg font-poppins font-bold mb-6">Restez informé</h3>
+            <p className="text-slate-400 text-sm mb-4">
+              Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités.
+            </p>
+            <div className="flex gap-2 mb-8">
+              <input
+                type="email"
+                placeholder="Votre email"
+                className="bg-slate-800 border-none text-white px-4 py-2 rounded-lg w-full focus:ring-2 focus:ring-primary outline-none placeholder:text-slate-500"
+              />
+              <Button size="icon" className="bg-primary hover:bg-primary/90 shrink-0">
+                <Send className="w-4 h-4" />
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 text-slate-400">
+                <MapPin className="w-5 h-5 text-primary shrink-0 mt-1" />
+                <span>Abidjan, Côte d'Ivoire<br />Cocody Riviera 2</span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-400">
+                <Phone className="w-5 h-5 text-primary shrink-0" />
+                <span>+225 07 07 XX XX XX</span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-400">
+                <Mail className="w-5 h-5 text-primary shrink-0" />
+                <span>contact@mayelia-academy.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-slate-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-slate-500 text-sm text-center md:text-left">
+            © {currentYear} Mayelia Academy. Tous droits réservés.
+          </p>
+          <div className="flex gap-6 text-sm">
+            {footerLinks.legal.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-slate-500 hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>
