@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Play, Gauge, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Gauge, ChevronLeft, ChevronRight } from 'lucide-react';
 import heroImage from '@/assets/about-hero.png';
 import drivingSimulator from '@/assets/driving_simulator.png';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -70,11 +70,7 @@ const Hero = () => {
               {/* Content */}
               <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-4xl">
-                  <div className="inline-block mb-6 animate-fade-in">
-                    <span className="px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full text-primary-foreground font-opensans text-sm font-medium border border-primary/30">
-                      🎓 À Abidjan, votre avenir commence ici
-                    </span>
-                  </div>
+
 
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-poppins font-bold text-primary-foreground mb-6 leading-tight animate-slide-in-left">
                     Développez vos compétences.
@@ -90,17 +86,6 @@ const Hero = () => {
                       >
                         Découvrir nos formations
                         <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </a>
-
-                    <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')}>
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        className="font-opensans font-semibold text-base bg-background/10 backdrop-blur-sm border-primary-foreground/30 text-primary-foreground hover:bg-background/20 hover:border-primary-foreground/50 shadow-lg group"
-                      >
-                        <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                        Prendre rendez-vous
                       </Button>
                     </a>
                   </div>
@@ -129,11 +114,7 @@ const Hero = () => {
               {/* Content */}
               <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-4xl">
-                  <div className="inline-block mb-6 animate-fade-in">
-                    <span className="px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full text-primary-foreground font-opensans text-sm font-medium border border-primary/30">
-                      🚗 Formation de pointe
-                    </span>
-                  </div>
+
 
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-poppins font-bold text-primary-foreground mb-6 leading-tight animate-slide-in-left">
                     Maîtrisez la route
@@ -154,17 +135,6 @@ const Hero = () => {
                         <Gauge className="mr-2 h-5 w-5" />
                         Découvrir le simulateur
                         <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </a>
-
-                    <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')}>
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        className="font-opensans font-semibold text-base bg-background/10 backdrop-blur-sm border-primary-foreground/30 text-primary-foreground hover:bg-background/20 hover:border-primary-foreground/50 shadow-lg group"
-                      >
-                        <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                        Réserver une session
                       </Button>
                     </a>
                   </div>
@@ -198,8 +168,8 @@ const Hero = () => {
             key={index}
             onClick={() => emblaApi?.scrollTo(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${selectedIndex === index
-                ? 'bg-primary w-8'
-                : 'bg-primary-foreground/30 hover:bg-primary-foreground/50'
+              ? 'bg-primary w-8'
+              : 'bg-primary-foreground/30 hover:bg-primary-foreground/50'
               }`}
             aria-label={`Aller au slide ${index + 1}`}
           />

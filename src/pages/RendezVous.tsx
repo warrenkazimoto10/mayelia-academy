@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Calendar, Clock, User, Mail, Phone, Loader2, CheckCircle, Car } from 'lucide-react';
@@ -47,11 +48,11 @@ const RendezVous = () => {
       if (date.getDay() !== 0) {
         dates.push({
           value: date.toISOString().split('T')[0],
-          label: date.toLocaleDateString('fr-FR', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+          label: date.toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
           })
         });
       }
@@ -95,6 +96,11 @@ const RendezVous = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Prendre Rendez-vous"
+        description="Réservez votre séance de simulation de conduite ou un entretien conseil avec nos experts."
+        canonical="/rendez-vous"
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -177,47 +183,47 @@ const RendezVous = () => {
                         </div>
                       </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="phone" className="font-opensans font-medium flex items-center gap-2">
-                            <Phone className="w-4 h-4 text-primary" />
-                            Téléphone *
-                          </Label>
-                          <Input
-                            id="phone"
-                            type="tel"
-                            required
-                            value={formData.phone}
-                            onChange={(e) => handleChange('phone', e.target.value)}
+                      <div className="space-y-2">
+                        <Label htmlFor="phone" className="font-opensans font-medium flex items-center gap-2">
+                          <Phone className="w-4 h-4 text-primary" />
+                          Téléphone *
+                        </Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          required
+                          value={formData.phone}
+                          onChange={(e) => handleChange('phone', e.target.value)}
                           placeholder="+225 XX XX XX XX"
-                              className="font-opensans"
-                            />
+                          className="font-opensans"
+                        />
                       </div>
 
                       {/* Sélection de la date */}
-                        <div className="space-y-2">
+                      <div className="space-y-2">
                         <Label htmlFor="date" className="font-opensans font-medium flex items-center gap-2">
                           <Calendar className="w-4 h-4 text-primary" />
                           Date souhaitée *
-                          </Label>
-                          <Select
+                        </Label>
+                        <Select
                           value={selectedDate}
                           onValueChange={(value) => {
                             setSelectedDate(value);
                             handleChange('date', value);
                           }}
                           required
-                          >
-                            <SelectTrigger className="font-opensans">
+                        >
+                          <SelectTrigger className="font-opensans">
                             <SelectValue placeholder="Sélectionnez une date" />
-                            </SelectTrigger>
-                            <SelectContent>
+                          </SelectTrigger>
+                          <SelectContent>
                             {getAvailableDates().map((date) => (
                               <SelectItem key={date.value} value={date.value}>
                                 {date.label}
                               </SelectItem>
                             ))}
-                            </SelectContent>
-                          </Select>
+                          </SelectContent>
+                        </Select>
                       </div>
 
                       {/* Sélection du créneau horaire */}

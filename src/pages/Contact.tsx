@@ -1,3 +1,4 @@
+import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactComponent from '@/components/Contact';
@@ -8,6 +9,11 @@ import contactContent from '@/assets/contact-content.jpg';
 const Contact = () => {
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Contactez-nous"
+        description="Besoin d'informations ? Contactez l'équipe de Mayelia Academy dès aujourd'hui. Nous sommes à votre écoute pour répondre à toutes vos questions."
+        canonical="/contact"
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -43,15 +49,15 @@ const Contact = () => {
             {/* Image Section */}
             <div className="max-w-6xl mx-auto mb-16">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img 
-                  src={contactContent} 
-                  alt="Service client professionnel Mayelia Academy" 
+                <img
+                  src={contactContent}
+                  alt="Service client professionnel Mayelia Academy"
                   className="w-full h-[400px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
               </div>
             </div>
-            
+
             <ContactComponent />
           </div>
         </section>

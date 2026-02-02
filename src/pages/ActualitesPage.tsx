@@ -1,3 +1,4 @@
+import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Actualites from '@/components/Actualites';
@@ -6,6 +7,11 @@ import { Newspaper } from 'lucide-react';
 const ActualitesPage = () => {
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Actualités"
+        description="Suivez l'actualité de Mayelia Academy : événements, nouvelles formations, partenariats et témoignages de nos étudiants."
+        canonical="/actualites"
+      />
       <Header />
       <main>
         {/* Hero Section */}

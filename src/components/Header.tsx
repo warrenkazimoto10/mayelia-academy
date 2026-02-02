@@ -57,7 +57,7 @@ const Header = () => {
             <img
               src={logo}
               alt="Mayelia Academy"
-              className={`w-auto transition-all duration-500 ${isScrolled ? 'h-12' : 'h-16'}`}
+              className={`w-auto transition-all duration-500 ${isScrolled ? 'h-16' : 'h-24'}`}
             />
           </a>
 
@@ -92,27 +92,31 @@ const Header = () => {
               {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
-            {/* CTA Button - Plus petit */}
-            <a
-              href="#contact"
-              onClick={(e) => scrollToSection(e, '#contact')}
-              className="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-full font-opensans text-sm font-bold hover:shadow-lg hover:scale-105 transition-all duration-300 transform"
-            >
-              Prendre rendez-vous
-            </a>
-
-            {/* Partner Logos - Plus petits */}
-            <div className="flex items-center pl-4 border-l border-slate-200 gap-3">
-              <img
-                src="https://fdfp.ci/wp-content/uploads/2019/09/logo-fdfp02.png"
-                alt="FDFP"
-                className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity"
-              />
-              <img
-                src="https://public.codesrousseau.fr/images/public/logo-2025-white.svg"
-                alt="Code Rousseau"
-                className="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity invert"
-              />
+            {/* Partner Certifications - Refonte avec mentions */}
+            <div className="flex items-center pl-4 border-l border-slate-200 gap-4">
+              {/* FDFP */}
+              <div className="flex flex-col items-center gap-1 group relative">
+                <img
+                  src="https://fdfp.ci/wp-content/uploads/2019/09/logo-fdfp02.png"
+                  alt="FDFP"
+                  className="h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
+                />
+                <span className="text-[10px] text-slate-500 font-opensans font-semibold whitespace-nowrap group-hover:text-primary transition-colors">
+                  Agréé FDFP
+                </span>
+              </div>
+              
+              {/* Codes Rousseau */}
+              <div className="flex flex-col items-center gap-1 group relative">
+                <img
+                  src="https://public.codesrousseau.fr/images/public/logo-2025-white.svg"
+                  alt="Code Rousseau"
+                  className="h-8 w-auto opacity-80 group-hover:opacity-100 transition-opacity invert"
+                />
+                <span className="text-[10px] text-slate-500 font-opensans font-semibold whitespace-nowrap group-hover:text-primary transition-colors text-center max-w-[80px] leading-tight">
+                  Partenariat avec Codes Rousseau
+                </span>
+              </div>
             </div>
           </nav>
 
@@ -146,13 +150,6 @@ const Header = () => {
                 {item.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              className="w-full text-center bg-primary text-white px-6 py-3 rounded-lg font-opensans font-bold mt-4"
-              onClick={(e) => scrollToSection(e, '#contact')}
-            >
-              Prendre rendez-vous
-            </a>
           </nav>
         </div>
       </div>

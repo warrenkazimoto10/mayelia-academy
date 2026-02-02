@@ -89,7 +89,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-poppins font-bold mb-6 flex items-center gap-2">
               <span className="w-8 h-1 bg-secondary rounded-full"></span>
-              Nos Formations
+              Nos Domaines
             </h3>
             <ul className="space-y-4">
               {footerLinks.formations.map((link) => (
@@ -130,11 +130,11 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3 text-slate-400">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span>+225 07 07 XX XX XX</span>
+                <span>07 87 63 88 15</span>
               </div>
               <div className="flex items-center gap-3 text-slate-400">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span>contact@mayelia-academy.com</span>
+                <span>infos.academy@mayelia.com</span>
               </div>
             </div>
           </div>

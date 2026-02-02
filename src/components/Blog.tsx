@@ -3,47 +3,16 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, ArrowRight, Newspaper, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { actualites } from '@/data/actualites';
 
-// Import des images
-import newsElectricCar from '@/assets/news_electric_car.png';
-import newsPartnership from '@/assets/news_partnership.png';
-import newsCampus from '@/assets/news_campus.png';
+// Import des images pour les conseils
 import formationSanteImage from '@/assets/formation-sante.png';
 import aboutHeroImage from '@/assets/about-hero.png';
 import driverTrainingImage from '@/assets/about_us_driver_training.png';
 
 const Blog = () => {
   const [activeTab, setActiveTab] = useState<'actualites' | 'conseils'>('conseils');
-
-  const actualites = [
-    {
-      title: 'Les métiers de demain dans l\'automobile électrique',
-      excerpt: 'Découvrez les nouvelles opportunités professionnelles dans le secteur automobile en pleine transformation vers l\'électrique.',
-      category: 'Automobile',
-      date: '15 Oct 2025',
-      readTime: '5 min',
-      categoryColor: 'bg-blue-100 text-blue-600',
-      image: newsElectricCar
-    },
-    {
-      title: 'Nouveau partenariat stratégique pour l\'emploi',
-      excerpt: 'Mayelia Academy signe un accord majeur avec les leaders de l\'industrie pour faciliter l\'insertion de nos diplômés.',
-      category: 'Partenariat',
-      date: '12 Oct 2025',
-      readTime: '3 min',
-      categoryColor: 'bg-purple-100 text-purple-600',
-      image: newsPartnership
-    },
-    {
-      title: 'Rentrée académique 2025 : Bienvenue aux nouveaux',
-      excerpt: 'Retour en images sur la journée d\'intégration de nos nouveaux étudiants sur le campus.',
-      category: 'Vie du Campus',
-      date: '08 Oct 2025',
-      readTime: '4 min',
-      categoryColor: 'bg-green-100 text-green-600',
-      image: newsCampus
-    },
-  ];
 
   const conseils = [
     {
@@ -75,7 +44,9 @@ const Blog = () => {
     },
   ];
 
-  const displayedItems = activeTab === 'actualites' ? actualites : conseils;
+  // Prendre seulement les 3 premières actualités pour l'affichage sur la page d'accueil
+  const displayedActualites = actualites.slice(0, 3);
+  const displayedItems = activeTab === 'actualites' ? displayedActualites : conseils;
 
   return (
     <section id="actualites" className="py-24 bg-background relative overflow-hidden">
@@ -120,70 +91,107 @@ const Blog = () => {
 
         {/* Content Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {displayedItems.map((item, index) => (
-            <Card
-              key={index}
-              className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-fade-in border-border overflow-hidden bg-card h-full flex flex-col"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Image Container */}
-              <div className="h-48 overflow-hidden relative">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-
-              <CardContent className="p-6 flex flex-col flex-grow">
-                <div className="flex justify-between items-start mb-4">
-                  <Badge className={`${item.categoryColor} font-opensans border-none px-3 py-1`}>
-                    {item.category}
-                  </Badge>
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {item.readTime}
-                  </div>
+          {displayedItems.map((item, index) => {
+            // Pour les actualités, utiliser le format du fichier actualites.ts
+            const isActualite = activeTab === 'actualites';
+            const itemId = isActualite ? (item as typeof actualites[0]).id : undefined;
+            const itemImage = isActualite ? (item as typeof actualites[0]).heroImage : (item as { image: string }).image;
+            const itemCategoryColor = isActualite ? (item as typeof actualites[0]).categoryColor : (item as { categoryColor: string }).categoryColor;
+            
+            return (
+              <Card
+                key={isActualite ? itemId : index}
+                className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-fade-in border-border overflow-hidden bg-card h-full flex flex-col"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Image Container */}
+                <div className="h-48 overflow-hidden relative">
+                  <img
+                    src={itemImage}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      // Fallback si l'image n'existe pas
+                      (e.target as HTMLImageElement).style.display = 'none';
+                      (e.target as HTMLImageElement).parentElement!.className += ' bg-gradient-hero';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 
-                <h3 className="text-xl font-poppins font-bold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                  {item.title}
-                </h3>
-
-                <p className="text-muted-foreground font-opensans mb-6 line-clamp-3 text-sm leading-relaxed flex-grow">
-                  {item.excerpt}
-                </p>
-
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
-                  <div className="flex items-center text-xs text-muted-foreground font-medium">
-                    <Calendar className="w-3 h-3 mr-1" />
-                    {item.date}
+                <CardContent className="p-6 flex flex-col flex-grow">
+                  <div className="flex justify-between items-start mb-4">
+                    <Badge className={`${itemCategoryColor} font-opensans border-none px-3 py-1`}>
+                      {item.category}
+                    </Badge>
+                    <div className="flex items-center text-xs text-muted-foreground">
+                      <Clock className="w-3 h-3 mr-1" />
+                      {item.readTime}
+                    </div>
                   </div>
 
-                  <Button
-                    variant="ghost"
-                    className="group/btn p-0 h-auto font-opensans font-bold text-primary hover:text-primary/80 hover:bg-transparent"
-                  >
-                    Lire la suite
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <h3 className="text-xl font-poppins font-bold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-muted-foreground font-opensans mb-6 line-clamp-3 text-sm leading-relaxed flex-grow">
+                    {item.excerpt}
+                  </p>
+
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+                    <div className="flex items-center text-xs text-muted-foreground font-medium">
+                      <Calendar className="w-3 h-3 mr-1" />
+                      {item.date}
+                    </div>
+
+                    {isActualite && itemId ? (
+                      <Link to={`/actualites/${itemId}`}>
+                        <Button
+                          variant="ghost"
+                          className="group/btn p-0 h-auto font-opensans font-bold text-primary hover:text-primary/80 hover:bg-transparent"
+                        >
+                          Lire la suite
+                          <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        className="group/btn p-0 h-auto font-opensans font-bold text-primary hover:text-primary/80 hover:bg-transparent"
+                      >
+                        Lire la suite
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         <div className="text-center">
-          <a href={activeTab === 'actualites' ? "/actualites" : "/conseils"}>
-            <Button
-              variant="outline"
-              size="lg"
-              className="font-opensans font-semibold hover:bg-primary hover:text-white transition-all duration-300 px-8 border-primary/20 hover:border-primary"
-            >
-              Voir {activeTab === 'actualites' ? 'toutes les actualités' : 'tous les conseils'}
-            </Button>
-          </a>
+          {activeTab === 'actualites' ? (
+            <Link to="/actualites">
+              <Button
+                variant="outline"
+                size="lg"
+                className="font-opensans font-semibold hover:bg-primary hover:text-white transition-all duration-300 px-8 border-primary/20 hover:border-primary"
+              >
+                Voir toutes les actualités
+              </Button>
+            </Link>
+          ) : (
+            <a href="/conseils">
+              <Button
+                variant="outline"
+                size="lg"
+                className="font-opensans font-semibold hover:bg-primary hover:text-white transition-all duration-300 px-8 border-primary/20 hover:border-primary"
+              >
+                Voir tous les conseils
+              </Button>
+            </a>
+          )}
         </div>
       </div>
     </section>

@@ -131,6 +131,22 @@ const FormationsDomaines = () => {
                     ]
                 },
                 {
+                    title: 'Simulateur de conduite',
+                    description: 'Formation immersive sur simulateur de dernière génération certifié CODES ROUSSEAU (leader européen de la sécurité routière) pour véhicules légers et poids lourds. Une innovation pédagogique offrant un apprentissage réaliste et sécurisé.',
+                    contenus: [
+                        'Formation immersive et réaliste adaptée aux débutants comme aux conducteurs expérimentés',
+                        'Apprentissage de la conduite défensive dans divers environnements : circulation urbaine, conditions météorologiques difficiles, freinages d\'urgence, situations à risques, obstacles imprévus',
+                        'Évaluation objective, personnalisée et suivi précis des performances de chaque apprenant'
+                    ],
+                    objectifs: [
+                        'Bénéficier d\'une formation immersive et sécurisée grâce à des outils technologiques avancés',
+                        'Apprendre la conduite défensive dans des environnements variés sans risques réels',
+                        'Réduire significativement les risques liés à l\'apprentissage en conditions réelles',
+                        'Recevoir une évaluation objective et personnalisée de ses performances',
+                        'Renforcer l\'engagement de Mayelia Academy pour une formation moderne et orientée vers l\'excellence'
+                    ]
+                },
+                {
                     title: 'Renforcement de Capacités et Recyclage Chauffeurs',
                     description: 'Elle est destinée à améliorer les compétences, faire la mise à jour des connaissances et sensibiliser les chauffeurs sur les nouvelles réglementations et technologies de conduite.',
                     contenus: [
@@ -368,15 +384,11 @@ const FormationsDomaines = () => {
             <div className="container mx-auto px-4 relative z-10">
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-                    <span className="inline-block px-4 py-2 bg-primary rounded-full text-white font-opensans text-sm font-medium mb-4 animate-scale-in shadow-lg">
-                        Nos Formations
-                    </span>
+
                     <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground mb-4">
-                        Cinq Domaines d'Expertise
+                        Nos Domaines d'Expertise
                     </h2>
-                    <p className="text-lg text-muted-foreground font-opensans font-semibold">
-                        Chaque programme est conçu en partenariat avec des entreprises, animé par des experts certifiés et orienté emploi et performance.
-                    </p>
+                    
                 </div>
 
                 {/* Domaines Tabs */}
@@ -407,8 +419,8 @@ const FormationsDomaines = () => {
                 </div>
 
                 {/* Formations Grid */}
-                <div className="max-w-6xl mx-auto">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
                         {currentDomaine.formations.map((formation, index) => (
                             <div
                                 key={index}
@@ -418,33 +430,33 @@ const FormationsDomaines = () => {
                                 {/* Card */}
                                 <div className="relative h-full bg-card/95 backdrop-blur-sm rounded-2xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
                                     {/* Gradient Header */}
-                                    <div className={`h-2 bg-gradient-to-r ${currentDomaine.color}`}></div>
+                                    <div className={`h-3 bg-gradient-to-r ${currentDomaine.color}`}></div>
 
                                     {/* Content */}
-                                    <div className="p-6">
+                                    <div className="p-8">
                                         {/* Title */}
-                                        <div className="flex items-start gap-3 mb-4">
-                                            <div className={`p-3 rounded-xl bg-gradient-to-br ${currentDomaine.gradient} flex-shrink-0`}>
-                                                <BookOpen className="w-5 h-5 text-primary" />
+                                        <div className="flex items-start gap-4 mb-5">
+                                            <div className={`p-4 rounded-xl bg-gradient-to-br ${currentDomaine.gradient} flex-shrink-0`}>
+                                                <BookOpen className="w-6 h-6 text-primary" />
                                             </div>
-                                            <h3 className="text-xl font-poppins font-bold text-foreground leading-tight">
+                                            <h3 className="text-2xl font-poppins font-bold text-foreground leading-tight">
                                                 {formation.title}
                                             </h3>
                                         </div>
 
                                         {/* Description */}
-                                        <p className="text-sm text-muted-foreground font-opensans leading-relaxed mb-4 line-clamp-3">
+                                        <p className="text-base text-muted-foreground font-opensans leading-relaxed mb-5 line-clamp-3">
                                             {formation.description}
                                         </p>
 
                                         {/* Stats */}
-                                        <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground">
-                                            <div className="flex items-center gap-1">
-                                                <Clock className="w-4 h-4" />
+                                        <div className="flex items-center gap-6 mb-5 text-sm text-muted-foreground">
+                                            <div className="flex items-center gap-2">
+                                                <Clock className="w-5 h-5" />
                                                 <span>Durée variable</span>
                                             </div>
-                                            <div className="flex items-center gap-1">
-                                                <Target className="w-4 h-4" />
+                                            <div className="flex items-center gap-2">
+                                                <Target className="w-5 h-5" />
                                                 <span>{formation.objectifs.length} objectifs</span>
                                             </div>
                                         </div>
@@ -452,25 +464,25 @@ const FormationsDomaines = () => {
                                         {/* Expand Button */}
                                         <button
                                             onClick={() => setExpandedFormation(expandedFormation === index ? null : index)}
-                                            className="w-full py-2 px-4 bg-gradient-to-r from-primary/10 to-secondary/10 hover:from-primary/20 hover:to-secondary/20 rounded-lg font-opensans font-semibold text-sm text-primary transition-all duration-300 flex items-center justify-center gap-2"
+                                            className="w-full py-3 px-6 bg-gradient-to-r from-primary/10 to-secondary/10 hover:from-primary/20 hover:to-secondary/20 rounded-lg font-opensans font-semibold text-base text-primary transition-all duration-300 flex items-center justify-center gap-2"
                                         >
                                             <span>{expandedFormation === index ? 'Voir moins' : 'Voir les détails'}</span>
-                                            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${expandedFormation === index ? 'rotate-180' : ''}`} />
+                                            <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedFormation === index ? 'rotate-180' : ''}`} />
                                         </button>
 
                                         {/* Expanded Content */}
                                         {expandedFormation === index && (
-                                            <div className="mt-4 pt-4 border-t border-border animate-fade-in">
+                                            <div className="mt-6 pt-6 border-t border-border animate-fade-in">
                                                 {/* Contenus */}
-                                                <div className="mb-4">
-                                                    <h4 className="text-sm font-poppins font-bold text-foreground mb-2 flex items-center gap-2">
-                                                        <div className="w-1 h-4 bg-primary rounded-full"></div>
+                                                <div className="mb-6">
+                                                    <h4 className="text-base font-poppins font-bold text-foreground mb-3 flex items-center gap-2">
+                                                        <div className="w-1.5 h-5 bg-primary rounded-full"></div>
                                                         Contenus
                                                     </h4>
-                                                    <ul className="space-y-2">
+                                                    <ul className="space-y-3">
                                                         {formation.contenus.map((contenu, idx) => (
-                                                            <li key={idx} className="text-xs text-muted-foreground font-opensans flex items-start gap-2">
-                                                                <span className="text-primary mt-1">•</span>
+                                                            <li key={idx} className="text-sm text-muted-foreground font-opensans leading-relaxed flex items-start gap-3">
+                                                                <span className="text-primary mt-1 text-lg">•</span>
                                                                 <span>{contenu}</span>
                                                             </li>
                                                         ))}
@@ -479,14 +491,14 @@ const FormationsDomaines = () => {
 
                                                 {/* Objectifs */}
                                                 <div>
-                                                    <h4 className="text-sm font-poppins font-bold text-foreground mb-2 flex items-center gap-2">
-                                                        <div className="w-1 h-4 bg-secondary rounded-full"></div>
+                                                    <h4 className="text-base font-poppins font-bold text-foreground mb-3 flex items-center gap-2">
+                                                        <div className="w-1.5 h-5 bg-secondary rounded-full"></div>
                                                         Objectifs
                                                     </h4>
-                                                    <ul className="space-y-2">
+                                                    <ul className="space-y-3">
                                                         {formation.objectifs.map((objectif, idx) => (
-                                                            <li key={idx} className="text-xs text-muted-foreground font-opensans flex items-start gap-2">
-                                                                <span className="text-secondary mt-1">•</span>
+                                                            <li key={idx} className="text-sm text-muted-foreground font-opensans leading-relaxed flex items-start gap-3">
+                                                                <span className="text-secondary mt-1 text-lg">•</span>
                                                                 <span>{objectif}</span>
                                                             </li>
                                                         ))}

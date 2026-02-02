@@ -18,24 +18,24 @@ import {
 const FAQModal = ({ isOpen, onOpenChange }: { isOpen: boolean; onOpenChange: (open: boolean) => void }) => {
     const faqItems = [
         {
-            question: "Comment s'inscrire à une formation ?",
-            answer: "Vous pouvez vous inscrire directement en ligne via notre formulaire de contact, ou en nous appelant. Nos conseillers vous guideront à travers le processus d'inscription."
+            question: "Pourquoi choisir Mayelia Academy pour se former ?",
+            answer: "Mayelia Academy offre une formation pratique, professionnalisante axée sur l'employabilité, dispensée par des experts certifiés."
         },
         {
-            question: "Les formations sont-elles certifiantes ?",
-            answer: "Oui, la majorité de nos formations délivrent une certification reconnue par l'État ou par nos partenaires industriels, valorisable sur le marché du travail."
+            question: "Quels avantages exclusifs offrent vos formations ?",
+            answer: "Nous offrons une formation orientée terrain, des stages pratiques et un accompagnement à l'insertion professionnelle."
         },
         {
-            question: "Proposez-vous des facilités de paiement ?",
-            answer: "Absolument. Nous proposons des échelonnements de paiement pour permettre au plus grand nombre d'accéder à nos formations de qualité."
+            question: "Peut-on travailler après une formation à Mayelia Academy ?",
+            answer: "Oui, nos programmes sont conçus pour favoriser une insertion rapide grâce à nos liens avec les filiales du groupe Mayelia et nos partenaires."
         },
         {
-            question: "Peut-on suivre les cours en ligne ?",
-            answer: "Nous offrons des formats hybrides et 100% en ligne pour certaines formations, afin de s'adapter à votre emploi du temps et à vos contraintes géographiques."
+            question: "Vos formations sont-elles ouvertes aux débutants ?",
+            answer: "Oui, certains programmes sont accessibles sans prérequis, avec un apprentissage progressif et encadré."
         },
         {
-            question: "Aidez-vous à l'insertion professionnelle ?",
-            answer: "Oui, notre pôle carrière vous accompagne : refonte de CV, simulation d'entretien et mise en relation avec notre réseau d'entreprises partenaires."
+            question: "Les formations sont-elles accessibles financièrement ?",
+            answer: "Oui, nos tarifs sont étudiés pour rester accessibles, avec des facilités de paiement selon les programmes."
         }
     ];
 

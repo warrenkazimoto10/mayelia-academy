@@ -2,58 +2,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { actualites } from '@/data/actualites';
 
 const Actualites = () => {
-  const actualites = [
-    {
-      title: 'Nouveau partenariat avec Orange Côte d\'Ivoire',
-      excerpt: 'Mayelia Academy annonce un nouveau partenariat stratégique avec Orange pour renforcer la formation en technologies de l\'information.',
-      category: 'Partenariat',
-      date: '20 Oct 2025',
-      readTime: '3 min',
-      categoryColor: 'bg-primary/10 text-primary',
-    },
-    {
-      title: 'Lancement de la session de formation automne 2025',
-      excerpt: 'Découvrez les nouvelles formations disponibles pour la session d\'automne 2025 dans nos quatre domaines d\'expertise.',
-      category: 'Formation',
-      date: '18 Oct 2025',
-      readTime: '4 min',
-      categoryColor: 'bg-secondary/10 text-secondary',
-    },
-    {
-      title: 'Mayelia Academy s\'agrandit : nouvel espace à Abidjan',
-      excerpt: 'Un nouveau centre de formation moderne ouvrira ses portes le mois prochain pour accueillir encore plus d\'apprenants.',
-      category: 'Événement',
-      date: '15 Oct 2025',
-      readTime: '5 min',
-      categoryColor: 'bg-accent/10 text-accent',
-    },
-    {
-      title: 'Certification FDFP : nouvelles accréditations obtenues',
-      excerpt: 'Nos programmes de formation ont reçu de nouvelles accréditations du Fonds de Développement de la Formation Professionnelle.',
-      category: 'Certification',
-      date: '12 Oct 2025',
-      readTime: '6 min',
-      categoryColor: 'bg-primary/10 text-primary',
-    },
-    {
-      title: 'Témoignages de réussite : promotion 2024',
-      excerpt: 'Découvrez les parcours inspirants de nos anciens apprenants qui ont trouvé un emploi dans les 6 mois suivant leur formation.',
-      category: 'Succès',
-      date: '10 Oct 2025',
-      readTime: '5 min',
-      categoryColor: 'bg-secondary/10 text-secondary',
-    },
-    {
-      title: 'Table ronde : L\'avenir de la formation professionnelle',
-      excerpt: 'Rejoignez-nous pour une table ronde avec des experts du secteur sur l\'évolution de la formation professionnelle en Afrique.',
-      category: 'Événement',
-      date: '08 Oct 2025',
-      readTime: '4 min',
-      categoryColor: 'bg-accent/10 text-accent',
-    },
-  ];
 
   return (
     <section className="py-24 bg-background relative overflow-hidden">
@@ -78,11 +30,21 @@ const Actualites = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {actualites.map((actualite, index) => (
             <Card
-              key={index}
+              key={actualite.id}
               className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in border-border overflow-hidden"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="h-48 bg-gradient-hero"></div>
+              <div className="h-48 bg-gradient-hero relative overflow-hidden">
+                <img 
+                  src={actualite.heroImage} 
+                  alt={actualite.title}
+                  className="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-300"
+                  onError={(e) => {
+                    // Fallback si l'image n'existe pas
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              </div>
               
               <CardContent className="p-6">
                 <Badge className={`${actualite.categoryColor} mb-3 font-opensans`}>
@@ -108,13 +70,15 @@ const Actualites = () => {
                   </div>
                 </div>
 
-                <Button 
-                  variant="ghost" 
-                  className="group/btn p-0 h-auto font-opensans font-semibold text-primary hover:text-primary/80"
-                >
-                  Lire l'article
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Button>
+                <Link to={`/actualites/${actualite.id}`}>
+                  <Button 
+                    variant="ghost" 
+                    className="group/btn p-0 h-auto font-opensans font-semibold text-primary hover:text-primary/80 w-full justify-start"
+                  >
+                    Lire l'article
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}

@@ -13,13 +13,13 @@ const Contact = () => {
     {
       icon: <Phone className="w-6 h-6 text-primary" />,
       title: 'Téléphone',
-      details: '+224 XX XX XX XX',
+      details: '07 87 63 88 15',
       subdetails: 'Lun-Ven 8h-18h',
     },
     {
       icon: <Mail className="w-6 h-6 text-primary" />,
       title: 'Email',
-      details: 'contact@mayelia-academy.com',
+      details: 'infos.academy@mayelia.com',
       subdetails: 'Réponse sous 24h',
     },
     {
@@ -149,7 +149,7 @@ const Contact = () => {
                     type="tel"
                     required
                     className="w-full px-4 py-3 rounded-lg border-2 border-border bg-background text-foreground focus:outline-none focus:border-primary transition-all placeholder:text-muted-foreground"
-                    placeholder="+224 XX XX XX XX"
+                    placeholder="07 87 63 88 15"
                   />
                 </div>
 

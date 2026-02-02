@@ -101,6 +101,18 @@ const driverModules: FormationModule[] = [
     ],
   },
   {
+    title: 'Simulateur de conduite',
+    description:
+      'Formation immersive sur simulateur de dernière génération certifié CODES ROUSSEAU (leader européen de la sécurité routière) pour véhicules légers et poids lourds. Une innovation pédagogique offrant un apprentissage réaliste et sécurisé.',
+    highlights: [
+      'Formation immersive et réaliste adaptée aux débutants comme aux conducteurs expérimentés',
+      'Apprentissage de la conduite défensive dans divers environnements : circulation urbaine, conditions météorologiques difficiles, freinages d\'urgence, situations à risques, obstacles imprévus',
+      'Réduction significative des risques liés à l\'apprentissage en conditions réelles',
+      'Évaluation objective, personnalisée et suivi précis des performances de chaque apprenant',
+      'Renforcement de l\'engagement de Mayelia Academy pour une formation moderne, sécurisée et orientée vers l\'excellence',
+    ],
+  },
+  {
     title: 'Renforcement de capacités & recyclage chauffeurs',
     description:
       'Mettez à jour vos compétences et restez informé des nouvelles réglementations et technologies.',

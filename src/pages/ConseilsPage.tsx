@@ -1,3 +1,4 @@
+import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Conseils from '@/components/Conseils';
@@ -6,6 +7,11 @@ import { Lightbulb } from 'lucide-react';
 const ConseilsPage = () => {
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Conseils & Carrière"
+        description="Boostez votre carrière avec les conseils d'experts de Mayelia Academy. Articles sur l'insertion professionnelle, le développement personnel et les compétences techniques."
+        canonical="/conseils"
+      />
       <Header />
       <main>
         {/* Hero Section */}

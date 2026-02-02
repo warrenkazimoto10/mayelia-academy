@@ -1,3 +1,4 @@
+import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FormationCard from '@/components/FormationCard';
@@ -83,6 +84,11 @@ const Formations = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Nos Formations"
+        description="Découvrez nos formations certifiantes en Automobile, Informatique, Service Client et Santé au Travail. Programmez votre réussite avec Mayelia Academy."
+        canonical="/formations"
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -116,20 +122,20 @@ const Formations = () => {
         <section className="py-24 bg-gradient-to-br from-background via-muted/20 to-background relative overflow-hidden">
           <div className="absolute top-20 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }}></div>
-          
+
           <div className="container mx-auto px-4 relative z-10">
             {/* Image Section */}
             <div className="max-w-6xl mx-auto mb-16">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img 
-                  src={formationsContent} 
-                  alt="Environnement de formation professionnel Mayelia Academy" 
+                <img
+                  src={formationsContent}
+                  alt="Environnement de formation professionnel Mayelia Academy"
                   className="w-full h-[400px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
               </div>
             </div>
-            
+
             <div className="text-center mb-12">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
                 <BookOpen className="w-5 h-5 text-primary" />

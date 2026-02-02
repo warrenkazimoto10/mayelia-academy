@@ -1,3 +1,4 @@
+import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { HelpCircle, Info } from 'lucide-react';
@@ -13,49 +14,70 @@ import faqContent from '@/assets/faq-content.jpg';
 const FAQ = () => {
   const faqs = [
     {
-      question: 'Quels sont les prérequis pour s\'inscrire ?',
-      answer: 'Les prérequis varient selon la formation choisie. Pour les formations en automobile et service client, aucun prérequis particulier n\'est nécessaire. Pour l\'informatique, des bases en navigation web sont recommandées. Contactez-nous pour plus de détails sur votre formation souhaitée.',
+      question: 'Pourquoi choisir Mayelia Academy pour se former ?',
+      answer: 'Mayelia Academy offre une formation pratique, professionnalisante axée sur l\'employabilité, dispensée par des experts certifiés.',
     },
     {
-      question: 'Quelle est la durée des formations ?',
-      answer: 'La durée varie selon le programme : Formation SST (2-4 mois), Service Client (3-6 mois), Automobile (6-12 mois), et Informatique (6-18 mois). Nous proposons également des horaires flexibles adaptés aux professionnels en activité.',
+      question: 'Quels avantages exclusifs offrent vos formations ?',
+      answer: 'Nous offrons une formation orientée terrain, des stages pratiques et un accompagnement à l\'insertion professionnelle.',
     },
     {
-      question: 'Les formations sont-elles certifiantes ?',
-      answer: 'Oui, toutes nos formations délivrent une certification reconnue. Les diplômes sont validés par nos partenaires professionnels et augmentent significativement votre employabilité sur le marché du travail.',
+      question: 'Peut-on travailler après une formation à Mayelia Academy ?',
+      answer: 'Oui, nos programmes sont conçus pour favoriser une insertion rapide grâce à nos liens avec les filiales du groupe Mayelia et nos partenaires.',
     },
     {
-      question: 'Proposez-vous des aides au financement ?',
-      answer: 'Nous proposons plusieurs options de financement : paiement échelonné, bourses sur critères sociaux, et partenariats avec des entreprises pour des formations financées. Contactez notre service administratif pour étudier votre dossier.',
+      question: 'Vos formations sont-elles ouvertes aux débutants ?',
+      answer: 'Oui, certains programmes sont accessibles sans prérequis, avec un apprentissage progressif et encadré.',
     },
     {
-      question: 'Est-ce que vous aidez à trouver un emploi après la formation ?',
-      answer: 'Absolument ! Nous avons un taux d\'insertion de 95%. Notre service placement travaille avec plus de 50 entreprises partenaires. Nous organisons également des sessions de préparation aux entretiens et d\'aide à la rédaction de CV.',
+      question: 'Les formations sont-elles accessibles financièrement ?',
+      answer: 'Oui, nos tarifs sont étudiés pour rester accessibles, avec des facilités de paiement selon les programmes.',
     },
     {
-      question: 'Les cours sont-ils en présentiel ou en ligne ?',
-      answer: 'Nous proposons les deux formats. La majorité de nos formations combine théorie en ligne via notre plateforme e-learning et pratique en présentiel dans nos ateliers équipés. Certains modules sont disponibles 100% en ligne.',
+      question: 'Les formations sont-elles certifiées ou reconnues ?',
+      answer: 'Oui, nos formations sont organisées selon des standards professionnels validés et certaines bénéficient de reconnaissances institutionnelles et sectorielles.',
     },
     {
-      question: 'Qui sont les formateurs ?',
-      answer: 'Nos formateurs sont des experts certifiés avec une expérience professionnelle significative dans leur domaine. Ils sont sélectionnés pour leur expertise technique et leurs qualités pédagogiques.',
+      question: 'À qui s\'adressent les formations de Mayelia Academy ?',
+      answer: 'Nos formations s\'adressent aux jeunes diplômés, professionnels du secteur automobile, entrepreneurs et à toute personne souhaitant se spécialiser dans nos différents domaines de formations.',
     },
     {
-      question: 'Peut-on visiter vos locaux avant de s\'inscrire ?',
-      answer: 'Bien sûr ! Nous organisons des journées portes ouvertes chaque mois. Vous pouvez également prendre rendez-vous pour une visite personnalisée et rencontrer nos équipes. Contactez-nous pour fixer une date.',
+      question: 'À quelle fréquence démarrez-vous les sessions de formation ?',
+      answer: 'Plusieurs sessions sont ouvertes chaque année selon les filières.',
     },
     {
-      question: 'Quelle est votre politique d\'annulation ?',
-      answer: 'Vous pouvez annuler votre inscription jusqu\'à 7 jours avant le début de la formation pour un remboursement complet. Consultez nos conditions générales pour plus de détails.',
+      question: 'Comment être informé des nouvelles formations ?',
+      answer: 'Via notre site internet, nos réseaux sociaux ou en contactant directement Mayelia Academy.',
     },
     {
-      question: 'Proposez-vous des formations sur mesure pour les entreprises ?',
-      answer: 'Oui, nous concevons des programmes de formation personnalisés pour les entreprises souhaitant former leurs employés. Contactez notre service B2B pour discuter de vos besoins spécifiques.',
+      question: 'Mayelia Academy propose-t-elle des formations pour les entreprises ?',
+      answer: 'Oui, nous développons des programmes sur mesure pour les entreprises désirant faire former leurs employés.',
+    },
+    {
+      question: 'Organisez-vous des formations en intra-entreprise ?',
+      answer: 'Oui, nos équipes peuvent intervenir directement au sein de votre structure.',
+    },
+    {
+      question: 'Proposez-vous des formations en sécurité routière pour les entreprises ?',
+      answer: 'Oui, nous accompagnons les entreprises dans la sensibilisation et la prévention des risques routiers.',
+    },
+    {
+      question: 'Comment devenir partenaire de Mayelia Academy ?',
+      answer: 'Il suffit de nous contacter via nos canaux officiels pour étudier un partenariat adapté à vos besoins.',
+    },
+    {
+      question: 'Comment obtenir plus d\'informations sur une formation ?',
+      answer: 'Vous pouvez nous contacter par téléphone, par e-mail, via nos réseaux sociaux ou en vous rendant directement dans nos locaux.',
     },
   ];
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="FAQ - Questions Fréquentes"
+        description="Trouvez des réponses aux questions sur nos formations, nos financements et nos certifications. Centre d'aide Mayelia Academy."
+        canonical="/faq"
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -91,15 +113,15 @@ const FAQ = () => {
             {/* Image Section */}
             <div className="max-w-6xl mx-auto mb-16">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img 
-                  src={faqContent} 
-                  alt="Centre d'aide Mayelia Academy" 
+                <img
+                  src={faqContent}
+                  alt="Centre d'aide Mayelia Academy"
                   className="w-full h-[400px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
               </div>
             </div>
-            
+
             <div className="max-w-4xl mx-auto">
               <div className="mb-12 text-center">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">

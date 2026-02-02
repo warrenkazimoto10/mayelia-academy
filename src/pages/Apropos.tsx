@@ -1,3 +1,4 @@
+import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Partners from '@/components/Partners';
@@ -33,6 +34,11 @@ const Apropos = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="À Propos de Nous"
+        description="Mayelia Academy est un centre de formation d'excellence à Abidjan. Notre mission : former les talents de demain et favoriser l'insertion professionnelle."
+        canonical="/apropos"
+      />
       <Header />
       <main>
         {/* Hero Section */}
