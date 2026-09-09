@@ -1,59 +1,23 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock, ArrowRight, Lightbulb } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Lightbulb, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { useConseils } from '@/hooks/useConseils';
 
 const Conseils = () => {
-  const conseils = [
-    {
-      title: 'Comment réussir sa reconversion professionnelle',
-      excerpt: 'Guide complet pour une reconversion réussie : identifier vos compétences transférables, choisir le bon secteur et préparer votre transition.',
-      category: 'Reconversion',
-      date: '19 Oct 2025',
-      readTime: '8 min',
-      categoryColor: 'bg-primary/10 text-primary',
-    },
-    {
-      title: '5 compétences essentielles pour le service client moderne',
-      excerpt: 'Découvrez les compétences clés qu\'un professionnel du service client doit maîtriser pour exceller dans son métier aujourd\'hui.',
-      category: 'Service Client',
-      date: '17 Oct 2025',
-      readTime: '6 min',
-      categoryColor: 'bg-secondary/10 text-secondary',
-    },
-    {
-      title: 'Se former en informatique : par où commencer ?',
-      excerpt: 'Conseils pratiques pour débuter une formation en informatique, choisir la spécialisation qui vous correspond et maximiser vos chances de réussite.',
-      category: 'Informatique',
-      date: '14 Oct 2025',
-      readTime: '7 min',
-      categoryColor: 'bg-accent/10 text-accent',
-    },
-    {
-      title: 'Mécanique automobile : les technologies à maîtriser',
-      excerpt: 'Panorama des technologies essentielles pour les mécaniciens modernes : du diagnostic embarqué aux véhicules électriques.',
-      category: 'Automobile',
-      date: '11 Oct 2025',
-      readTime: '9 min',
-      categoryColor: 'bg-primary/10 text-primary',
-    },
-    {
-      title: 'Optimiser son CV après une formation professionnelle',
-      excerpt: 'Nos conseils pour mettre en valeur votre formation dans votre CV et maximiser vos chances lors des entretiens d\'embauche.',
-      category: 'Carrière',
-      date: '09 Oct 2025',
-      readTime: '5 min',
-      categoryColor: 'bg-secondary/10 text-secondary',
-    },
-    {
-      title: 'Santé et sécurité au travail : prévention et bonnes pratiques',
-      excerpt: 'Guide pratique pour intégrer la prévention des risques professionnels dans votre quotidien et protéger votre santé.',
-      category: 'Sécurité',
-      date: '06 Oct 2025',
-      readTime: '6 min',
-      categoryColor: 'bg-accent/10 text-accent',
-    },
-  ];
+  const { conseils, loading, error } = useConseils();
+
+  if (loading && conseils.length === 0) {
+    return (
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 bg-background relative overflow-hidden">
@@ -75,10 +39,23 @@ const Conseils = () => {
           </p>
         </div>
 
+        {error && (
+          <div className="mb-4 p-4 bg-destructive/10 border border-destructive/30 rounded-lg text-center">
+            <p className="text-sm text-destructive">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && conseils.length === 0 && (
+          <p className="text-center text-muted-foreground font-opensans py-16">
+            Aucun conseil pour le moment.
+          </p>
+        )}
+
+        {conseils.length > 0 && (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {conseils.map((conseil, index) => (
+          {conseils.slice(0, 3).map((conseil, index) => (
             <Card
-              key={index}
+              key={conseil.id}
               className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in border-border overflow-hidden"
               style={{ animationDelay: `${index * 100}ms` }}
             >
@@ -87,10 +64,6 @@ const Conseils = () => {
               </div>
               
               <CardContent className="p-6">
-                <Badge className={`${conseil.categoryColor} mb-3 font-opensans`}>
-                  {conseil.category}
-                </Badge>
-
                 <h3 className="text-xl font-poppins font-bold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
                   {conseil.title}
                 </h3>
@@ -110,17 +83,31 @@ const Conseils = () => {
                   </div>
                 </div>
 
-                <Button 
-                  variant="ghost" 
-                  className="group/btn p-0 h-auto font-opensans font-semibold text-primary hover:text-primary/80"
-                >
-                  Lire le conseil
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Button>
+                <Link to={`/conseils/${conseil.id}`}>
+                  <Button 
+                    variant="ghost" 
+                    className="group/btn p-0 h-auto font-opensans font-semibold text-primary hover:!text-primary/80 hover:bg-transparent w-full justify-start"
+                  >
+                    Lire le conseil
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}
         </div>
+        )}
+
+        {conseils.length > 0 && (
+          <div className="text-center mt-4">
+            <Link to="/conseils">
+              <Button className="font-opensans font-semibold px-8 py-3 text-base">
+                Tous les conseils
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

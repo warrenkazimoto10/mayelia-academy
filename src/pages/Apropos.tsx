@@ -2,13 +2,17 @@ import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Partners from '@/components/Partners';
-import { Award, Users, Target, Heart, TrendingUp, BookOpen, Newspaper, Lightbulb, GraduationCap, Sparkles, Zap, Briefcase, RefreshCw, UserCheck, CheckCircle2 } from 'lucide-react';
+import { Award, Users, Target, Heart, TrendingUp, BookOpen, Zap, Briefcase, RefreshCw, UserCheck, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import aboutHero from '@/assets/about-hero.png';
-import aboutStatsImage from '@/assets/about-stats-replacement.jpg';
+import defaultMissionImage from '@/assets/about-stats-replacement.jpg';
+import { useSiteSettingsValue } from '@/hooks/useSiteSettings';
+import { resolveMediaUrl } from '@/lib/resolveMediaUrl';
 
 const Apropos = () => {
+  const s = useSiteSettingsValue();
+  const missionImageUrl = s.aproposMissionImageUrl?.trim();
+  const missionImageSrc = missionImageUrl ? resolveMediaUrl(missionImageUrl) : defaultMissionImage;
   const values = [
     {
       icon: <Award className="w-8 h-8 text-primary" />,
@@ -34,11 +38,7 @@ const Apropos = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO
-        title="À Propos de Nous"
-        description="Mayelia Academy est un centre de formation d'excellence à Abidjan. Notre mission : former les talents de demain et favoriser l'insertion professionnelle."
-        canonical="/apropos"
-      />
+      <SEO title="À Propos de Nous" description={s.aproposSeoDescription} canonical="/apropos" />
       <Header />
       <main>
         {/* Hero Section */}
@@ -57,18 +57,6 @@ const Apropos = () => {
           <div className="absolute bottom-20 left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl animate-pulse"></div>
 
-          {/* Floating icons */}
-          <div className="absolute top-32 right-1/4 animate-float hidden lg:block" style={{ animationDelay: '1s' }}>
-            <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-xl">
-              <Sparkles className="w-10 h-10 text-white" />
-            </div>
-          </div>
-          <div className="absolute bottom-32 left-1/4 animate-float hidden lg:block" style={{ animationDelay: '1.5s' }}>
-            <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-xl">
-              <Award className="w-10 h-10 text-white" />
-            </div>
-          </div>
-
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center animate-fade-in">
               <div className="inline-block mb-6 animate-scale-in">
@@ -79,23 +67,9 @@ const Apropos = () => {
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-poppins font-bold text-white mb-8 leading-tight animate-slide-in-left drop-shadow-2xl">
                 Mayelia Academy
               </h1>
-              <p className="text-2xl text-white/95 font-opensans leading-relaxed max-w-3xl mx-auto mb-8 animate-fade-in drop-shadow-lg">
+              <p className="text-2xl text-white/95 font-opensans leading-relaxed max-w-3xl mx-auto animate-fade-in drop-shadow-lg">
                 Centre de formation d'excellence créé en 2023 par le Groupe Mayelia Participations. Nous constituons un hub d'apprentissage moderne dédié à l'insertion professionnelle et au développement des compétences.
               </p>
-              <div className="flex flex-wrap justify-center gap-4 animate-scale-in" style={{ animationDelay: '300ms' }}>
-                <div className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30">
-                  <GraduationCap className="w-5 h-5 text-white inline mr-2" />
-                  <span className="text-white font-opensans font-medium">Formation certifiante</span>
-                </div>
-                <div className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30">
-                  <Users className="w-5 h-5 text-white inline mr-2" />
-                  <span className="text-white font-opensans font-medium">Experts reconnus</span>
-                </div>
-                <div className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30">
-                  <Target className="w-5 h-5 text-white inline mr-2" />
-                  <span className="text-white font-opensans font-medium">Orienté emploi</span>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -112,17 +86,16 @@ const Apropos = () => {
                   <span className="text-primary font-opensans text-sm font-bold">Notre Mission</span>
                 </div>
                 <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  Former les talents de demain
+                  {s.aproposMissionHeading}
                 </h2>
-                <p className="text-lg text-foreground font-opensans leading-relaxed">
-                  MAYELIA Academy est un hub de formation créé en 2023. Le centre est dédié à la formation, l'apprentissage, au perfectionnement et au renforcement des capacités des étudiants et des professionnels dans les métiers de l'automobile, l'informatique, du service client et de la santé et sécurité au travail.
-
-                  C'est un centre de formation dynamique et innovant, offrant des formations sur mesure, adaptées aux évolutions du marché de l'emploi. Nos programmes sont conçus et dispensés par des experts certifiés, reconnus pour leur engagement dans le développement des compétences et l'insertion professionnelle.
-
-                  Basée à Abidjan, Côte d'Ivoire, Mayelia Academy fait partie du Groupe Mayelia Participations et s'engage à transformer l'éducation professionnelle pour construire un avenir meilleur.                </p>
-                <p className="text-lg text-foreground font-opensans leading-relaxed">
-                  Nous constituons un hub d'apprentissage moderne, dédié à l'insertion professionnelle, au développement des compétences et à la reconversion des actifs. Chaque programme est conçu en partenariat avec des entreprises leaders, animé par des experts certifiés et orienté vers l'emploi et la performance.
-                </p>
+                {[s.aproposMissionBlock1, s.aproposMissionBlock2, s.aproposMissionBlock3, s.aproposMissionBlock4]
+                  .map((p) => p?.trim())
+                  .filter(Boolean)
+                  .map((text, i) => (
+                    <p key={i} className="text-lg text-foreground font-opensans leading-relaxed">
+                      {text}
+                    </p>
+                  ))}
                 <div className="flex flex-wrap items-center gap-4 pt-4">
                   <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-lg border border-primary/20">
                     <TrendingUp className="w-5 h-5 text-primary" />
@@ -138,7 +111,7 @@ const Apropos = () => {
                 <div className="absolute -inset-6 bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl opacity-30 blur-2xl group-hover:opacity-50 transition-opacity"></div>
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-primary/20 group-hover:border-primary/40 transition-colors">
                   <img
-                    src={aboutStatsImage}
+                    src={missionImageSrc}
                     alt="Formation professionnelle Mayelia Academy"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -187,66 +160,6 @@ const Apropos = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-          </div>
-        </section>
-
-
-
-        {/* Actualités et Conseils Section */}
-        <section className="py-24 bg-gradient-to-br from-background via-background to-muted/20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground mb-4">
-                  Ressources
-                </h2>
-                <p className="text-lg text-muted-foreground font-opensans">
-                  Découvrez nos actualités et conseils pour votre développement professionnel
-                </p>
-              </div>
-              <Tabs defaultValue="actualites" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-8">
-                  <TabsTrigger value="actualites" className="flex items-center gap-2">
-                    <Newspaper className="w-5 h-5" />
-                    Actualités
-                  </TabsTrigger>
-                  <TabsTrigger value="conseils" className="flex items-center gap-2">
-                    <Lightbulb className="w-5 h-5" />
-                    Conseils
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="actualites" className="space-y-4">
-                  <Card className="border-border">
-                    <CardContent className="p-6">
-                      <h3 className="font-poppins font-bold text-xl text-foreground mb-3">
-                        Nos dernières actualités
-                      </h3>
-                      <p className="text-muted-foreground font-opensans mb-4">
-                        Restez informé des dernières nouveautés de Mayelia Academy, de nos formations, de nos partenariats et des événements à venir.
-                      </p>
-                      <a href="/actualites" className="text-primary font-opensans font-semibold hover:underline">
-                        Voir toutes les actualités →
-                      </a>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="conseils" className="space-y-4">
-                  <Card className="border-border">
-                    <CardContent className="p-6">
-                      <h3 className="font-poppins font-bold text-xl text-foreground mb-3">
-                        Conseils pratiques
-                      </h3>
-                      <p className="text-muted-foreground font-opensans mb-4">
-                        Bénéficiez de nos conseils d'experts pour réussir votre reconversion, développer vos compétences et exceller dans votre carrière professionnelle.
-                      </p>
-                      <a href="/conseils" className="text-primary font-opensans font-semibold hover:underline">
-                        Découvrir nos conseils →
-                      </a>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
             </div>
           </div>
         </section>

@@ -12,7 +12,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "seed:dump-formations": "npx --yes tsx scripts/dump-formations-json.mts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

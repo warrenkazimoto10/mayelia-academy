@@ -1,0 +1,18 @@
+Options -Indexes
+RewriteEngine On
+
+# Passer le header Authorization à Laravel (Sanctum)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Bloquer l'accès direct aux fichiers internes de laravel-api (sauf public/)
+RewriteRule ^laravel-api/(?!public/) - [F,L]
+
+# Rediriger /api/* vers Laravel (laravel-api/public/index.php)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api(/.*)?$ laravel-api/public/index.php [L,QSA]
+
+# SPA fallback — toute URL non-fichier/dossier → index.html (React Router)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

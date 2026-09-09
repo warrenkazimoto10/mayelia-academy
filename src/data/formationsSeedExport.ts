@@ -1,0 +1,378 @@
+/**
+ * Données formations alignées sur l’ancien fallback statique (FormationsDomaines).
+ * Utilisées pour le fallback UI et pour générer mayelia-formations.json (seed Laravel).
+ */
+export type FormationIconKey = 'truck' | 'wrench' | 'monitor' | 'shield' | 'users';
+
+export interface FormationSeedProgramme {
+  title: string;
+  description: string;
+  contenus: string[];
+  objectifs: string[];
+}
+
+export interface FormationSeedDomaine {
+  id: string;
+  title: string;
+  iconKey: FormationIconKey;
+  color: string;
+  gradient: string;
+  /** Chemin logique (cohérent avec les actualités / API) */
+  image: string;
+  formations: FormationSeedProgramme[];
+}
+
+export const FORMATIONS_SEED_DOMAINES: FormationSeedDomaine[] = [
+  {
+    id: 'chauffeur-securite',
+    title: 'Formation des Chauffeurs et Sécurité Routière',
+    iconKey: 'truck',
+    color: 'from-orange-500 to-red-500',
+    gradient: 'from-orange-500/10 to-red-500/10',
+    image: 'src/assets/formation/chauffeur.png',
+    formations: [
+      {
+        title: 'Conduite Défensive',
+        description:
+          "Enseigner les techniques de conduite préventive visant à minimiser les risques d'accidents et à améliorer la sécurité sur la route.",
+        contenus: [
+          "Techniques d'anticipation et gestion des dangers",
+          'Maîtrise des distances de sécurité et conduite en conditions difficiles',
+          "Réaction face aux situations d'urgence et freinage d'urgence",
+        ],
+        objectifs: [
+          'Anticiper les comportements imprévisibles des autres usagers',
+          'Réduire les risques liés à la conduite en milieu urbain et sur les routes',
+          'Adopter une conduite plus sécuritaire et économique',
+        ],
+      },
+      {
+        title: 'Simulateur de conduite',
+        description:
+          "Formation immersive sur simulateur de dernière génération certifié CODES ROUSSEAU (leader européen de la sécurité routière) pour véhicules légers et poids lourds. Une innovation pédagogique offrant un apprentissage réaliste et sécurisé.",
+        contenus: [
+          'Formation immersive et réaliste adaptée aux débutants comme aux conducteurs expérimentés',
+          "Apprentissage de la conduite défensive dans divers environnements : circulation urbaine, conditions météorologiques difficiles, freinages d'urgence, situations à risques, obstacles imprévus",
+          'Évaluation objective, personnalisée et suivi précis des performances de chaque apprenant',
+        ],
+        objectifs: [
+          "Bénéficier d'une formation immersive et sécurisée grâce à des outils technologiques avancés",
+          'Apprendre la conduite défensive dans des environnements variés sans risques réels',
+          "Réduire significativement les risques liés à l'apprentissage en conditions réelles",
+          'Recevoir une évaluation objective et personnalisée de ses performances',
+          "Renforcer l'engagement de Mayelia Academy pour une formation moderne et orientée vers l'excellence",
+        ],
+      },
+      {
+        title: 'Renforcement de Capacités et Recyclage Chauffeurs',
+        description:
+          "Elle est destinée à améliorer les compétences, faire la mise à jour des connaissances et sensibiliser les chauffeurs sur les nouvelles réglementations et technologies de conduite.",
+        contenus: [
+          'Révision des règles de sécurité routière et techniques de conduite défensive',
+          'Maîtrise des véhicules et optimisation de la consommation de carburant',
+          "Gestion des situations d'urgence et prévention des risques routiers",
+        ],
+        objectifs: [
+          'Actualiser les connaissances sur les règles de sécurité routière et de sécurité',
+          'Renforcer les compétences pour une conduite plus efficace et sécuritaire',
+          'Sensibiliser aux nouveaux enjeux environnementaux et technologiques',
+        ],
+      },
+      {
+        title: "Conduite d'Engin",
+        description:
+          "Préparer les chauffeurs à la conduite de divers types d'engins de chantier, en leur fournissant les compétences nécessaires pour garantir la sécurité et l'efficacité sur les chantiers.",
+        contenus: [
+          "Introduction aux différents types d'engins et leurs spécificités",
+          'Techniques de conduite sécurisée et manœuvres de précision',
+          "Pratiques sur le terrain et simulations d'opérations",
+        ],
+        objectifs: [
+          "Acquérir les compétences techniques pour la conduite d'engins de chantier (bulldozers, pelleteuses, etc.)",
+          'Respecter les règles de sécurité et les réglementations en vigueur lors des opérations',
+          "Optimiser l'utilisation des engins pour une meilleure productivité sur le chantier",
+        ],
+      },
+      {
+        title: 'Habilitation à la Conduite de Grue',
+        description:
+          'Préparer les conducteurs à la conduite en toute sécurité de différents types de grues, en respectant les normes de sécurité et les réglementations en vigueur.',
+        contenus: [
+          'Principes de base de la conduite de grue',
+          'Sécurité et prévention des risques liés à la manipulation de charges lourdes',
+          'Conduite pratique et manœuvre spécifique en conditions réelles',
+        ],
+        objectifs: [
+          'Apprendre à manipuler et conduire des grues en toute sécurité',
+          'Connaître les règles de sécurité liées à la conduite de grues',
+          "Obtenir l'habilitation nécessaire pour conduire des grues sur des chantiers ou en industrie",
+        ],
+      },
+      {
+        title: 'Sécurité Routière',
+        description:
+          'Aborder les règles et bonnes pratiques de la sécurité routière, visant à réduire les accidents et à favoriser une conduite plus responsable et sécurisée.',
+        contenus: [
+          "Analyse des causes d'accidents et prévention des risques",
+          'Connaissance des règles de circulation et des nouvelles réglementations',
+          'Techniques de conduite sécuritaire et gestion des situations critiques',
+        ],
+        objectifs: [
+          'Sensibiliser aux risques routiers et aux comportements à risque',
+          'Promouvoir une conduite respectueuse des règles et des usagers',
+          "Réduire le nombre d'accidents par l'application de bonnes pratiques",
+        ],
+      },
+      {
+        title: 'Formation VTC',
+        description:
+          "Permettre aux participants de répondre aux attentes des clients en termes de service, de sécurité, et de professionnalisme, tout en augmentant leur employabilité et leurs opportunités d'évolution dans le secteur des VTC et du transport privé.",
+        contenus: [
+          'Techniques de conduite professionnelle et de sécurité',
+          "Gestion de la relation client et amélioration de l'expérience passager",
+          'Connaissance de la réglementation et des responsabilités de chauffeur VTC',
+        ],
+        objectifs: [
+          'Former les participants aux standards de service et de sécurité de l’industrie VTC',
+          'Développer les compétences en conduite, en service et en gestion de la clientèle',
+          'Maîtriser la réglementation et les bonnes pratiques spécifiques au métier de chauffeur VTC',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'technicien-polyvalent',
+    title: 'Technicien Polyvalent',
+    iconKey: 'wrench',
+    color: 'from-blue-500 to-cyan-500',
+    gradient: 'from-blue-500/10 to-cyan-500/10',
+    image: 'src/assets/formation/tp.png',
+    formations: [
+      {
+        title: 'Maintenance de Véhicules',
+        description:
+          'Fournir aux participants les compétences nécessaires pour réaliser la maintenance préventive et corrective des véhicules, garantissant ainsi leur bon fonctionnement et leur conformité lors des contrôles techniques.',
+        contenus: [
+          'Principes de fonctionnement des systèmes mécaniques, électriques et électroniques des véhicules',
+          'Techniques de diagnostic et de réparation des pannes',
+          'Procédure de maintenance préventive et vérification avant le contrôle technique',
+        ],
+        objectifs: [
+          'Maîtriser les techniques de maintenance préventive et corrective sur différents types de véhicules',
+          'Identifier et diagnostiquer les pannes courantes',
+          'Assurer la conformité des véhicules aux normes de sécurité et de contrôle technique',
+        ],
+      },
+      {
+        title: 'Soudure TIG MIG',
+        description:
+          "Permettre aux participants d'acquérir les compétences nécessaires pour maîtriser les techniques de soudure TIG et MIG, adaptées à divers matériaux et situations industrielles.",
+        contenus: [
+          'Introduction aux principes de la soudure TIG et MIG',
+          'Techniques de soudage sur différents matériaux (acier, aluminium, etc.)',
+          'Sécurité et prévention des risques en soudure',
+        ],
+        objectifs: [
+          'Maîtriser les procédés de soudure TIG (Tungsten Inert Gas) et MIG (Métal Inert Gas)',
+          'Apprendre à souder avec précision différents types de métaux',
+          'Assurer la qualité des soudures en respectant les normes de sécurité et de productivité',
+        ],
+      },
+      {
+        title: 'Maintenance Hydraulique',
+        description:
+          "Permettre aux participants d'acquérir les compétences nécessaires pour diagnostiquer, entretenir et réparer les systèmes hydrauliques, assurant ainsi leur bon fonctionnement et leur durabilité.",
+        contenus: [
+          'Etude des composants et circuits hydrauliques',
+          'Analyse et diagnostic des pannes',
+          'Bonnes pratiques de sécurité lors des interventions sur les systèmes hydrauliques',
+        ],
+        objectifs: [
+          'Comprendre les principes de fonctionnement des circuits hydrauliques',
+          'Diagnostiquer et résoudre les pannes sur les systèmes hydrauliques',
+          'Appliquer des techniques de maintenance préventive et corrective',
+        ],
+      },
+      {
+        title: 'Formation en Organe Moteur',
+        description:
+          'Fournir une compréhension approfondie des composants et du fonctionnement des moteurs, ainsi que des compétences en diagnostic et en réparation.',
+        contenus: [
+          'Analyse des différents types de moteurs et de leurs composants',
+          'Techniques de diagnostic et de réparation',
+          'Maintenance préventive pour optimiser la durée de vie des moteurs',
+        ],
+        objectifs: [
+          'Comprendre les principes de fonctionnement des moteurs thermiques et électriques',
+          'Diagnostiquer les problèmes courants des organes moteurs',
+          'Appliquer des techniques de maintenance préventive et corrective sur les moteurs',
+        ],
+      },
+      {
+        title: 'Préparateur Technique et Maintenance de Véhicules',
+        description:
+          'Préparer les véhicules au contrôle technique en réalisant un diagnostic complet et en effectuant les maintenances nécessaires pour garantir leur conformité.',
+        contenus: [
+          'Diagnostic des principaux systèmes (freins, éclairage, châssis...)',
+          'Réparation et maintenance préventive des véhicules',
+          'Connaissance des normes et réglementations en matière de contrôle technique',
+        ],
+        objectifs: [
+          'Maîtriser les vérifications techniques nécessaires avant le contrôle',
+          'Identifier et résoudre les dysfonctionnements pouvant affecter la conformité des véhicules',
+          'Assurer une maintenance préventive pour réduire les risques de contre-visite',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'competences-informatiques',
+    title: 'Compétences Informatiques',
+    iconKey: 'monitor',
+    color: 'from-purple-500 to-pink-500',
+    gradient: 'from-purple-500/10 to-pink-500/10',
+    image: 'src/assets/formation/informatique.png',
+    formations: [
+      {
+        title: "Outils Informatiques de Contrôle de Gestion et d'Analyse de Données",
+        description:
+          "Enseigner l'utilisation des outils informatiques pour optimiser le contrôle de gestion et l'analyse des données financières et opérationnelles, afin de faciliter la prise de décision stratégique.",
+        contenus: [
+          "Utilisation avancée d'Excel pour la gestion et l'analyse de données",
+          "Introduction aux outils d'aide à la décision (Power BI, tableaux de bord)",
+          "Techniques d'automatisation des processus financiers",
+        ],
+        objectifs: [
+          'Maîtriser les logiciels de gestion financière et d’analyse de données (Excel, Power BI, etc.)',
+          'Automatiser les processus de contrôle de gestion à l’aide d’outils numériques',
+          'Analyser les données pour améliorer la performance organisationnelle',
+        ],
+      },
+      {
+        title: 'Formation en Excel',
+        description:
+          'Enseigner les formalités aux participants les fonctionnalités essentielles d’Excel pour une utilisation efficace dans la gestion des données, l’analyse et la création de rapports.',
+        contenus: [
+          'Introduire aux fonctionnalités de base (cellule, lignes, colonnes)',
+          'Utilisation des formules et fonctions avancées',
+          'Création de tableaux et graphiques pour la visualisation des données',
+        ],
+        objectifs: [
+          'Maîtriser les outils de base et avancés d’Excel pour optimiser la gestion des données',
+          'Apprendre à créer et gérer des tableaux, graphiques et formules',
+          'Développer des compétences en analyse de données et en reporting',
+        ],
+      },
+      {
+        title: 'Informatique et Management Opérationnel',
+        description:
+          'Développer les compétences les compétences en informatique et en management pour une gestion efficace des opérations au sein de l’entreprise, en s’appuyant sur des outils technologiques.',
+        contenus: [
+          'Utilisation des outils informatiques pour la gestion des opérations',
+          'Technique de management des équipes et gestion des processus',
+          'Analyse de la performance à l’aide de logiciels de gestion et de suivi',
+        ],
+        objectifs: [
+          'Maîtriser les outils informatiques pour la gestion opérationnelle des activités',
+          'Améliorer les compétences en management pour optimiser la productivité et les performances',
+          'Savoir analyser et prendre des décisions stratégiques en temps réel',
+        ],
+      },
+      {
+        title: 'Outils Informatique, Secrétariat et Fiscalité',
+        description:
+          'Développer les compétences les compétences en informatique et en management pour une gestion efficace des opérations au sein de l’entreprise, en s’appuyant sur des outils technologiques.',
+        contenus: [
+          'Utilisation des outils informatiques pour la gestion des opérations',
+          'Technique de management des équipes et gestion des processus',
+          'Analyse de la performance à l’aide de logiciels de gestion et de suivi',
+        ],
+        objectifs: [
+          'Maîtriser les outils informatiques pour la gestion opérationnelle des activités',
+          'Améliorer les compétences en management pour optimiser la productivité et les performances',
+          'Savoir analyser et prendre des décisions stratégiques en temps réel',
+        ],
+      },
+      {
+        title: "Spécialité Plurivalentes de l'Informatique",
+        description:
+          "Formation polyvalente permettant d'acquérir des compétences essentielles dans divers domaines de l'informatique, allant de l'utilisation des logiciels courants à la cybersécurité et la gestion des bases de données.",
+        contenus: [
+          'Utilisation des outils informatiques (Microsoft Office, gestion des fichiers)',
+          'Introduction à la cybersécurité et protection des données',
+          "Gestion de bases de données et administration de systèmes d'exploitation",
+        ],
+        objectifs: [
+          'Maîtriser les outils informatiques de bases tels logiciels bureautiques',
+          'Comprendre les principes de la cybersécurité et de la gestion des données',
+          "Acquérir des compétences en systèmes d'exploitation et administration de réseaux",
+        ],
+      },
+    ],
+  },
+  {
+    id: 'prevention-securite',
+    title: 'Prévention et Sécurité au Travail',
+    iconKey: 'shield',
+    color: 'from-green-500 to-emerald-500',
+    gradient: 'from-green-500/10 to-emerald-500/10',
+    image: 'src/assets/formation/securite.png',
+    formations: [
+      {
+        title: 'Sauveteur Secouriste du Travail (SST)',
+        description:
+          "Permettre acquisition d'acquérir les compétences nécessaires pour intervenir rapidement et efficacement en cas d'accident de travail, en appliquant les gestes de premiers secours.",
+        contenus: [
+          'Prevention des risques et identification des situations dangereuses',
+          'Apprentissage des gestes de premiers secours (massage cardiaque, arrêt des saignements, etc.)',
+          "Mise en pratique sur des scénarios d'accidents en milieu professionnel",
+        ],
+        objectifs: [
+          'Former les participants à la prévention des risques professionnels',
+          'Apprendre les gestes de premiers secours à appliquer en cas d’accident de travail',
+          'Garantir une réponse rapide et efficace pour limiter les conséquences des accidents sur le lieu de travail',
+        ],
+      },
+      {
+        title: 'Sécurité Incendie',
+        description:
+          "Permettre l'acquisition des compétences nécessaires pour prévenir les risques d'incendie, réagir rapidement en cas d'urgence, et maîtriser les techniques d'évacuation et d'intervention en toute sécurité.",
+        contenus: [
+          'Prevention des risques d’incendie et règle de sécurité incendie',
+          'Utilisation des équipements de lutte contre l’incendie',
+          "Mise en pratique à travers des simulations d'évacuation et d'intervention",
+        ],
+        objectifs: [
+          'Former les participants à la prévention des risques d’incendie',
+          'Apprendre à manipuler les équipements de lutte contre l’incendie (extincteurs, alarmes, etc.)',
+          'Maîtriser les procédures d’évacuation et de gestion des situations d’urgence',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'relation-client',
+    title: 'Relation Client',
+    iconKey: 'users',
+    color: 'from-pink-500 to-rose-500',
+    gradient: 'from-pink-500/10 to-rose-500/10',
+    image: 'src/assets/formation/relation-client.png',
+    formations: [
+      {
+        title: 'Service - Relation et Expérience Client',
+        description:
+          'Cette formation enseigne aux participants les techniques et compétences pour offrir un service client exceptionnel, renforcer la satisfaction et fidéliser les clients.',
+        contenus: [
+          "Technique de communication et d'écoute client",
+          'Principes de l’expérience client et personnalisation du service',
+          'Gestion des réclamations et situations conflictuelles',
+        ],
+        objectifs: [
+          'Développer les compétences en communication et en écoute active pour interagir efficacement avec les clients',
+          'Améliorer l’expérience client en apprenant à anticiper et à répondre aux besoins des clients',
+          'Gérer les situations délicates avec professionnalisme pour renforcer la satisfaction et l’image de l’entreprise',
+        ],
+      },
+    ],
+  },
+];

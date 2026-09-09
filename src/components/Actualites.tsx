@@ -1,11 +1,25 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { actualites } from '@/data/actualites';
+import { useActualites } from '@/hooks/useActualites';
+import { resolveMediaUrl } from '@/lib/resolveMediaUrl';
 
 const Actualites = () => {
+  const { actualites, loading, error } = useActualites();
+
+  if (loading && actualites.length === 0) {
+    return (
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 bg-background relative overflow-hidden">
@@ -27,8 +41,21 @@ const Actualites = () => {
           </p>
         </div>
 
+        {error && (
+          <div className="mb-4 p-4 bg-destructive/10 border border-destructive/30 rounded-lg text-center">
+            <p className="text-sm text-destructive">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && actualites.length === 0 && (
+          <p className="text-center text-muted-foreground font-opensans py-16">
+            Aucune actualité pour le moment.
+          </p>
+        )}
+
+        {actualites.length > 0 && (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {actualites.map((actualite, index) => (
+          {actualites.slice(0, 3).map((actualite, index) => (
             <Card
               key={actualite.id}
               className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in border-border overflow-hidden"
@@ -36,7 +63,7 @@ const Actualites = () => {
             >
               <div className="h-48 bg-gradient-hero relative overflow-hidden">
                 <img 
-                  src={actualite.heroImage} 
+                  src={resolveMediaUrl(actualite.heroImage)} 
                   alt={actualite.title}
                   className="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-300"
                   onError={(e) => {
@@ -73,7 +100,7 @@ const Actualites = () => {
                 <Link to={`/actualites/${actualite.id}`}>
                   <Button 
                     variant="ghost" 
-                    className="group/btn p-0 h-auto font-opensans font-semibold text-primary hover:text-primary/80 w-full justify-start"
+                    className="group/btn p-0 h-auto font-opensans font-semibold text-primary hover:!text-primary/80 hover:bg-transparent w-full justify-start"
                   >
                     Lire l'article
                     <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -83,6 +110,18 @@ const Actualites = () => {
             </Card>
           ))}
         </div>
+        )}
+
+        {actualites.length > 0 && (
+          <div className="text-center mt-4">
+            <Link to="/actualites">
+              <Button className="font-opensans font-semibold px-8 py-3 text-base">
+                Toutes les actualités
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

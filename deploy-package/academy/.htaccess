@@ -1,0 +1,15 @@
+Options -Indexes
+RewriteEngine On
+RewriteBase /
+
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteRule ^laravel-api/(?!public/) - [F,L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^api(/.*)?$ laravel-api/public/index.php [L,QSA]
+RewriteRule ^sanctum(/.*)?$ laravel-api/public/index.php [L,QSA]
+
+RewriteRule ^ index.html [L]

@@ -2,18 +2,16 @@ import { SEO } from '@/components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactComponent from '@/components/Contact';
-import { MapPin, Mail, Phone } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import contactHero from '@/assets/contact-hero.jpg';
 import contactContent from '@/assets/contact-content.jpg';
+import { useSiteSettingsValue } from '@/hooks/useSiteSettings';
 
 const Contact = () => {
+  const s = useSiteSettingsValue();
   return (
     <div className="min-h-screen">
-      <SEO
-        title="Contactez-nous"
-        description="Besoin d'informations ? Contactez l'équipe de Mayelia Academy dès aujourd'hui. Nous sommes à votre écoute pour répondre à toutes vos questions."
-        canonical="/contact"
-      />
+      <SEO title="Contactez-nous" description={s.contactPageMetaDescription} canonical="/contact" />
       <Header />
       <main>
         {/* Hero Section */}
@@ -37,7 +35,7 @@ const Contact = () => {
                 Contactez-nous
               </h1>
               <p className="text-xl text-white/90 font-opensans leading-relaxed">
-                Notre équipe est à votre écoute pour répondre à toutes vos questions
+                {s.contactSectionSubtitle}
               </p>
             </div>
           </div>

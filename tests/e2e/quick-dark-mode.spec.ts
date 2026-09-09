@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Quick Dark Mode Test', () => {
     test('should open the site and find dark mode button', async ({ page }) => {
-        // Aller directement sur localhost:8080
-        await page.goto('http://localhost:8080', { waitUntil: 'domcontentloaded', timeout: 10000 });
+        // Page d’accueil (baseURL Playwright)
+        await page.goto('/', { waitUntil: 'domcontentloaded', timeout: 10000 });
 
         // Attendre que le header soit visible
         await page.waitForSelector('header', { timeout: 5000 });

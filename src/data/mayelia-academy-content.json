@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "projet": "Mayelia Academy",
+    "description": "Catalogue de référence : actualités (articles) et conseils tels que définis dans le frontend (fallback statique).",
+    "adresse": {
+      "ligne1": "Marcory Zone 4, Rue Abli Mathieu 716 Abidjan,",
+      "ligne2": "Côte d'Ivoire",
+      "complet": "Marcory Zone 4, Rue Abli Mathieu 716 Abidjan, Côte d'Ivoire"
+    },
+    "routes": {
+      "listeActualites": "/actualites",
+      "detailActualite": "/actualites/:id",
+      "listeConseils": "/conseils",
+      "detailConseil": "/conseils/:id"
+    },
+    "notes": [
+      "Les images sont référencées par chemins relatifs au dossier src/assets (comme dans actualites.ts).",
+      "Les vues détail sont implémentées dans src/pages/ActualiteDetail.tsx et src/pages/ConseilDetail.tsx."
+    ]
+  },
+  "actualites": [
+    {
+      "id": "simulateurs-conduite-mayelia-academy",
+      "title": "Saviez-vous que chez Mayelia Academy, nous ne faisons pas que de la formation classique ?",
+      "excerpt": "En plus de nos cours, nous disposons de simulateurs de conduite modernes pour poids léger et poids lourd, permettant aux apprenants de s'entraîner dans des conditions proches de la réalité.",
+      "category": "Innovation",
+      "date": "20 Jan 2025",
+      "readTime": "3 min",
+      "categoryColor": "bg-primary/10 text-primary",
+      "heroImage": "src/assets/actualite/simulateur.jpg",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "Saviez-vous que chez Mayelia Academy, nous ne faisons pas que de la formation classique ?"
+          },
+          {
+            "text": "En plus de nos cours, nous disposons de simulateurs de conduite modernes :\n🔹 poids léger\n🔹 poids lourd"
+          },
+          {
+            "text": "Ces simulateurs permettent aux apprenants de s'entraîner dans des conditions proches de la réalité, en toute sécurité, avant de prendre la route.",
+            "image": {
+              "src": "src/assets/actualite/simulateur.jpg",
+              "alt": "Simulateur de conduite Mayelia Academy",
+              "caption": "Simulateur de conduite moderne pour poids léger et poids lourd"
+            }
+          },
+          {
+            "text": "Chez Mayelia Academy, nous allions formation, technologie et sécurité routière pour mieux vous préparer à la conduite."
+          },
+          {
+            "text": "📩 Contactez-nous pour en savoir plus."
+          }
+        ]
+      }
+    },
+    {
+      "id": "projet-pejedec-formation",
+      "title": "Projet PEJEDEC | Point d'étape sur la formation",
+      "excerpt": "Depuis le 8 décembre, la formation du projet PEJEDEC, portée par Mayelia Academy en partenariat avec l'Agence Emploi Jeunes, se déroule avec engagement et régularité.",
+      "category": "Formation",
+      "date": "18 Jan 2025",
+      "readTime": "5 min",
+      "categoryColor": "bg-secondary/10 text-secondary",
+      "heroImage": "src/assets/actualite/projet pejedec/1769429284754.jpg",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "Depuis le 8 décembre, la formation du projet PEJEDEC, portée par Mayelia Academy en partenariat avec l'Agence Emploi Jeunes, se déroule avec engagement et régularité.",
+            "image": {
+              "src": "src/assets/actualite/projet pejedec/1769429284754.jpg",
+              "alt": "Formation PEJEDEC - Mayelia Academy",
+              "caption": "Formation du projet PEJEDEC en cours"
+            }
+          },
+          {
+            "text": "Après le lancement officiel du programme, les apprenants ont progressivement abordé plusieurs modules clés, parmi lesquels :\n• Le diagnostic des équipements électriques,\n• La maintenance automobile (moteur),\n• La sécurité routière, pilier essentiel des métiers techniques,\n• Et cette semaine, les fondamentaux de l'entrepreneuriat.",
+            "image": {
+              "src": "src/assets/actualite/projet pejedec/1769429285393.jpg",
+              "alt": "Modules de formation PEJEDEC",
+              "caption": "Apprenants suivant les modules de formation"
+            }
+          },
+          {
+            "text": "Chaque module vise à renforcer les compétences techniques, professionnelles et comportementales des participants, dans une logique de montée en compétence durable et d'employabilité.",
+            "image": {
+              "src": "src/assets/actualite/projet pejedec/1769429285418.jpg",
+              "alt": "Formation pratique PEJEDEC",
+              "caption": "Formation pratique en maintenance automobile"
+            }
+          },
+          {
+            "text": "Ce parcours structuré illustre la volonté de Mayelia Academy d'offrir une formation complète, alliant savoir-faire technique, responsabilité et esprit d'initiative.",
+            "image": {
+              "src": "src/assets/actualite/projet pejedec/1769429285616.jpg",
+              "alt": "Apprenants PEJEDEC",
+              "caption": "Les apprenants du projet PEJEDEC en formation"
+            }
+          },
+          {
+            "text": "La formation se poursuit, avec la même exigence et la même ambition : préparer les jeunes aux réalités du monde professionnel."
+          }
+        ]
+      }
+    },
+    {
+      "id": "olympiades-metiers-worldskills-2025",
+      "title": "5ᵉ édition de l'Olympiade des Métiers - WorldSkills Côte d'Ivoire 2025",
+      "excerpt": "Du mercredi 26 au samedi 29 novembre 2025, s'est tenue la 5ᵉ édition de l'Olympiade des Métiers au Lycée Technique d'Abidjan, également connue sous le nom de \"WorldSkills Côte d'Ivoire 2025\".",
+      "category": "Événement",
+      "date": "29 Nov 2025",
+      "readTime": "6 min",
+      "categoryColor": "bg-primary/10 text-primary",
+      "heroImage": "src/assets/actualite/olympiades/1767009686004.jpg",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "Du mercredi 26 au samedi 29 novembre 2025, s'est tenue la 5ᵉ édition de l'Olympiade des Métiers au Lycée Technique d'Abidjan, également connue sous le nom de \"WorldSkills Côte d'Ivoire 2025\".",
+            "image": {
+              "src": "src/assets/actualite/olympiades/1767009686004.jpg",
+              "alt": "Olympiades des Métiers 2025",
+              "caption": "5ᵉ édition de l'Olympiade des Métiers au Lycée Technique d'Abidjan"
+            }
+          },
+          {
+            "text": "Cet événement, organisé par le Ministère de l'Enseignement Technique, de la Formation Professionnelle et de l'Apprentissage (METFPA) à travers la Direction de la Vie Scolaire (DVS), a constitué une opportunité privilégiée pour aller à la rencontre des élèves, futurs professionnels, et leur présenter nos différentes formations sur notre stand.",
+            "image": {
+              "src": "src/assets/actualite/olympiades/1767009687320.jpg",
+              "alt": "Stand Mayelia Academy aux Olympiades",
+              "caption": "Stand Mayelia Academy aux Olympiades des Métiers"
+            }
+          },
+          {
+            "text": "Ce fut un honneur de partager ce moment avec des élèves passionnés, d'échanger sur leurs aspirations et de leur présenter les opportunités qu'offre notre entreprise, afin de développer leurs compétences, renforcer leur employabilité et les accompagner dans la construction d'un avenir professionnel solide et innovant.",
+            "image": {
+              "src": "src/assets/actualite/olympiades/1767009688865.jpg",
+              "alt": "Échanges avec les élèves",
+              "caption": "Échanges avec les élèves passionnés lors des Olympiades"
+            }
+          },
+          {
+            "text": "Chez Mayelia Academy, nous aidons également les entreprises à renforcer les compétences de leurs équipes afin de stimuler l'efficacité opérationnelle et encourager l'innovation. Nous vous proposons :\n✅ Des programmes de formation conçus selon vos besoins métiers\n✅ Un accompagnement assuré par des professionnels\n✅ Des parcours certifiants pour faire de vos talents un véritable levier de valeur",
+            "image": {
+              "src": "src/assets/actualite/olympiades/1767009689815.jpg",
+              "alt": "Formations Mayelia Academy",
+              "caption": "Présentation des formations et opportunités Mayelia Academy"
+            }
+          },
+          {
+            "text": "Parce ce que vous avez un futur prometteur, Mayelia Academy s'engage à vous accompagner dans la construction d'un monde où vos compétences deviennent votre plus grande force !",
+            "image": {
+              "src": "src/assets/actualite/olympiades/1767009690090.jpg",
+              "alt": "Futur prometteur avec Mayelia Academy",
+              "caption": "Mayelia Academy s'engage pour votre avenir professionnel"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "participation-salon-automobile-abidjan-2025",
+      "title": "Retour sur notre participation au Salon de l'Automobile d'Abidjan 2025",
+      "excerpt": "Notre participation à ce rendez-vous incontournable du secteur automobile a été marquée par des échanges riches et des rencontres stimulantes avec nos visiteurs.",
+      "category": "Événement",
+      "date": "15 Jan 2025",
+      "readTime": "5 min",
+      "categoryColor": "bg-primary/10 text-primary",
+      "heroImage": "src/assets/actualite/salonAutomobile/1758208562683.jpg",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "Notre participation à ce rendez-vous incontournable du secteur automobile a été marquée par des échanges riches et des rencontres stimulantes avec nos visiteurs. Chacune de vos suggestions et observations nous inspire et nous aide à affiner et enrichir nos offres de formation, pour mieux répondre à vos attentes.",
+            "image": {
+              "src": "src/assets/actualite/salonAutomobile/1758208562683.jpg",
+              "alt": "Salon de l'Automobile d'Abidjan 2025",
+              "caption": "Stand Mayelia Academy au Salon de l'Automobile d'Abidjan 2025"
+            }
+          },
+          {
+            "text": "Parmi les moments forts de cet événement, le simulateur de conduite a particulièrement retenu l'attention. Cet outil pédagogique innovant a permis à de nombreux visiteurs de tester leurs réflexes et leurs aptitudes de conduite dans des conditions proches du réel.",
+            "image": {
+              "src": "src/assets/actualite/salonAutomobile/1758208581077.jpg",
+              "alt": "Simulateur de conduite au Salon",
+              "caption": "Démonstration du simulateur de conduite de dernière génération"
+            }
+          },
+          {
+            "text": "Une expérience interactive et immersive, en parfaite adéquation avec notre approche : former autrement, pour former efficacement.",
+            "image": {
+              "src": "src/assets/actualite/salonAutomobile/1758208585635.jpg",
+              "alt": "Visiteurs utilisant le simulateur",
+              "caption": "Expérience immersive sur simulateur de conduite"
+            }
+          },
+          {
+            "text": "Nous avons également eu l'honneur de recevoir un certificat de participation, marque de reconnaissance de notre implication dans le développement et la promotion du secteur automobile en Côte d'Ivoire.",
+            "image": {
+              "src": "src/assets/actualite/salonAutomobile/1758208594880.jpg",
+              "alt": "Certificat de participation",
+              "caption": "Certificat de participation reçu par Mayelia Academy"
+            }
+          },
+          {
+            "text": "Un grand merci à toutes celles et ceux qui ont contribué à faire de cet événement un moment unique de partage et d'apprentissage !",
+            "image": {
+              "src": "src/assets/actualite/salonAutomobile/1758208596630.jpg",
+              "alt": "Équipe Mayelia Academy au Salon",
+              "caption": "L'équipe Mayelia Academy au Salon de l'Automobile"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "conseils": [
+    {
+      "id": "1",
+      "title": "Comment réussir sa reconversion professionnelle",
+      "excerpt": "Guide complet pour une reconversion réussie : identifier vos compétences transférables, choisir le bon secteur et préparer votre transition.",
+      "category": "Reconversion",
+      "date": "19 Oct 2025",
+      "readTime": "8 min",
+      "categoryColor": "bg-primary/10 text-primary",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "La reconversion professionnelle est une étape importante dans la vie d'un individu. Elle nécessite une réflexion approfondie sur vos compétences, vos aspirations et les opportunités du marché."
+          },
+          {
+            "text": "Dans ce guide, nous vous accompagnons étape par étape pour identifier vos compétences transférables, choisir le secteur qui vous correspond et préparer efficacement votre transition professionnelle."
+          }
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "5 compétences essentielles pour le service client moderne",
+      "excerpt": "Découvrez les compétences clés qu'un professionnel du service client doit maîtriser pour exceller dans son métier aujourd'hui.",
+      "category": "Service Client",
+      "date": "17 Oct 2025",
+      "readTime": "6 min",
+      "categoryColor": "bg-secondary/10 text-secondary",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "Le service client moderne évolue constamment. Les attentes des clients sont de plus en plus élevées, et les professionnels doivent maîtriser un ensemble de compétences variées."
+          }
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "title": "Se former en informatique : par où commencer ?",
+      "excerpt": "Conseils pratiques pour débuter une formation en informatique, choisir la spécialisation qui vous correspond et maximiser vos chances de réussite.",
+      "category": "Informatique",
+      "date": "14 Oct 2025",
+      "readTime": "7 min",
+      "categoryColor": "bg-accent/10 text-accent",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "L'informatique offre de nombreuses opportunités de carrière. Mais par où commencer quand on débute ?"
+          }
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "title": "Mécanique automobile : les technologies à maîtriser",
+      "excerpt": "Panorama des technologies essentielles pour les mécaniciens modernes : du diagnostic embarqué aux véhicules électriques.",
+      "category": "Automobile",
+      "date": "11 Oct 2025",
+      "readTime": "9 min",
+      "categoryColor": "bg-primary/10 text-primary",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "Le secteur automobile évolue rapidement avec l'arrivée des véhicules électriques et des systèmes de diagnostic avancés."
+          }
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "title": "Optimiser son CV après une formation professionnelle",
+      "excerpt": "Nos conseils pour mettre en valeur votre formation dans votre CV et maximiser vos chances lors des entretiens d'embauche.",
+      "category": "Carrière",
+      "date": "09 Oct 2025",
+      "readTime": "5 min",
+      "categoryColor": "bg-secondary/10 text-secondary",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "Après une formation professionnelle, il est essentiel de savoir mettre en valeur vos nouvelles compétences dans votre CV."
+          }
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "title": "Santé et sécurité au travail : prévention et bonnes pratiques",
+      "excerpt": "Guide pratique pour intégrer la prévention des risques professionnels dans votre quotidien et protéger votre santé.",
+      "category": "Sécurité",
+      "date": "06 Oct 2025",
+      "readTime": "6 min",
+      "categoryColor": "bg-accent/10 text-accent",
+      "content": {
+        "paragraphs": [
+          {
+            "text": "La santé et la sécurité au travail sont des enjeux majeurs pour tous les professionnels. La prévention est la clé."
+          }
+        ]
+      }
+    }
+  ]
+}

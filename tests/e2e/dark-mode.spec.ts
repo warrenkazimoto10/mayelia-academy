@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Dark Mode Toggle', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('http://localhost:8080', { waitUntil: 'domcontentloaded' });
+        await page.goto('/', { waitUntil: 'domcontentloaded' });
     });
 
     test('should display dark mode toggle button in header', async ({ page }) => {

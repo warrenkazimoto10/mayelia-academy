@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
-import logo from '@/assets/logo_mayelia.png';
+import defaultLogo from '@/assets/logo_mayelia.png';
+import { useSiteSettingsValue } from '@/hooks/useSiteSettings';
+import { resolveMediaUrl } from '@/lib/resolveMediaUrl';
 
 const Header = () => {
+  const s = useSiteSettingsValue();
+  const customLogo = s.siteLogoUrl?.trim();
+  const logoSrc = customLogo ? resolveMediaUrl(customLogo) : defaultLogo;
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -17,6 +25,14 @@ const Header = () => {
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    if (location.pathname !== '/') {
+      const hash = href.startsWith('#') ? href.slice(1) : href;
+      navigate({ pathname: '/', hash });
+      return;
+    }
+
     const element = document.querySelector(href);
     if (element) {
       const offset = 80;
@@ -29,7 +45,6 @@ const Header = () => {
         top: offsetPosition,
         behavior: 'smooth'
       });
-      setIsMobileMenuOpen(false);
     }
   };
 
@@ -55,8 +70,8 @@ const Header = () => {
             className="flex items-center space-x-2 group"
           >
             <img
-              src={logo}
-              alt="Mayelia Academy"
+              src={logoSrc}
+              alt={s.siteName}
               className={`w-auto transition-all duration-500 ${isScrolled ? 'h-16' : 'h-24'}`}
             />
           </a>
@@ -99,7 +114,7 @@ const Header = () => {
                 <img
                   src="https://fdfp.ci/wp-content/uploads/2019/09/logo-fdfp02.png"
                   alt="FDFP"
-                  className="h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
+                  className="h-4 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
                 />
                 <span className="text-[10px] text-slate-500 font-opensans font-semibold whitespace-nowrap group-hover:text-primary transition-colors">
                   Agréé FDFP
@@ -111,7 +126,7 @@ const Header = () => {
                 <img
                   src="https://public.codesrousseau.fr/images/public/logo-2025-white.svg"
                   alt="Code Rousseau"
-                  className="h-8 w-auto opacity-80 group-hover:opacity-100 transition-opacity invert"
+                  className="h-3.5 w-auto opacity-80 group-hover:opacity-100 transition-opacity invert"
                 />
                 <span className="text-[10px] text-slate-500 font-opensans font-semibold whitespace-nowrap group-hover:text-primary transition-colors text-center max-w-[80px] leading-tight">
                   Partenariat avec Codes Rousseau

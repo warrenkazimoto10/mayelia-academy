@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Participant {
+  id           Int           @id @default(autoincrement())
+  civility     String        @default("M.")
+  fullName     String
+  createdAt    DateTime      @default(now())
+  certificates Certificate[]
+}
+
+model Training {
+  id           Int           @id @default(autoincrement())
+  title        String
+  client       String?
+  startDate    DateTime
+  endDate      DateTime
+  issuePlace   String        @default("Abidjan")
+  issueDate    DateTime
+  createdAt    DateTime      @default(now())
+  certificates Certificate[]
+}
+
+model Certificate {
+  id            Int         @id @default(autoincrement())
+  ref           String      @unique
+  validated     Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  participantId Int
+  trainingId    Int
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  training      Training    @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+
+  @@unique([participantId, trainingId])
+}

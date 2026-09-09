@@ -117,6 +117,10 @@ export default {
         "float": {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" }
+        },
+        "domaine-indicator-glow": {
+          "0%, 100%": { filter: "drop-shadow(0 0 6px rgba(255,255,255,0.55))" },
+          "50%": { filter: "drop-shadow(0 0 10px rgba(255,255,255,0.9))" }
         }
       },
       animation: {
@@ -125,7 +129,8 @@ export default {
         "fade-in": "fade-in 0.6s ease-out",
         "slide-in-left": "slide-in-left 0.6s ease-out",
         "scale-in": "scale-in 0.4s ease-out",
-        "float": "float 3s ease-in-out infinite"
+        "float": "float 3s ease-in-out infinite",
+        "domaine-indicator-glow": "domaine-indicator-glow 2s ease-in-out infinite"
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',

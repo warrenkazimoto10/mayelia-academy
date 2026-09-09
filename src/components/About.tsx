@@ -1,8 +1,20 @@
-import { CheckCircle2, Users, TrendingUp, Award, MonitorPlay, Target } from 'lucide-react';
-import aboutImage from '@/assets/formationn.jpg';
-import logo from '@/assets/logo_mayelia.png';
+import { CheckCircle2, Users, TrendingUp, Award, MonitorPlay, Target, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import defaultAboutImage from '@/assets/formationn.jpg';
+import { useSiteSettingsValue } from '@/hooks/useSiteSettings';
+import { resolveMediaUrl } from '@/lib/resolveMediaUrl';
 
 const About = () => {
+    const s = useSiteSettingsValue();
+    const customImg = s.homeAboutImageUrl?.trim();
+    const aboutImageSrc = customImg ? resolveMediaUrl(customImg) : defaultAboutImage;
+    // Espace insécable avant le « ? » pour qu'il ne se retrouve jamais seul en fin de ligne.
+    const titleAccent = (s.homeAboutTitleAccent ?? '').trim().replace(/\s+([?!:;])/g, ' $1');
+    const expertiseBullets = (s.homeAboutExpertiseBullets ?? '')
+        .split('\n')
+        .map((item) => item.trim())
+        .filter(Boolean);
     const features = [
         {
             icon: <TrendingUp className="w-5 h-5 text-primary" />,
@@ -40,22 +52,40 @@ const About = () => {
 
 
                         <h2 className="text-4xl md:text-5xl font-poppins font-bold text-foreground mb-8 leading-tight">
-                            QUI <span className="text-primary">SOMMES-NOUS ?</span>
+                            {(s.homeAboutTitlePrefix ?? '').trim()}{' '}
+                            <span className="text-primary">{titleAccent}</span>
                         </h2>
 
                         <div className="space-y-6 text-muted-foreground font-opensans text-lg leading-relaxed">
-                            <p>
-                                Filiale du groupe <span className="font-semibold text-foreground">Mayelia Participations</span>,
-                                <span className="font-semibold text-foreground"> Mayelia Academy</span> est un hub de formation créé en 2023.
-                                Le centre est dédié à la formation, l'apprentissage, au perfectionnement et au renforcement des capacités
-                                des étudiants et des professionnels dans les métiers de l'automobile, de l'informatique, du service client
-                                et de la santé et sécurité au travail (SST).
-                            </p>
-                            <p>
-                                Mayelia Academy est un centre de formation dynamique et innovant, offrant des formations sur mesure,
-                                adaptées aux évolutions du marché de l'emploi. Nos programmes sont conçus et dispensés par des experts certifiés,
-                                reconnus pour leur engagement dans le développement des compétences et l'insertion professionnelle.
-                            </p>
+                            <p>{s.homeAboutIntro}</p>
+
+                            <div className="space-y-4">
+                                <h3 className="font-poppins font-bold text-foreground text-xl">
+                                    {s.homeAboutExpertiseHeading}
+                                </h3>
+                                <p>{s.homeAboutExpertiseIntro}</p>
+                                <ul className="space-y-2 pl-1">
+                                    {expertiseBullets.map((item, index) => (
+                                        <li key={index} className="flex items-start gap-3">
+                                            <CheckCircle2 className="w-5 h-5 text-primary mt-1 shrink-0" />
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p>{s.homeAboutExpertiseOutro}</p>
+                            </div>
+                        </div>
+
+                        <div className="mt-8">
+                            <Button
+                                asChild
+                                className="font-opensans font-semibold rounded-full px-8 h-12 shadow-md hover:shadow-lg transition-shadow"
+                            >
+                                <Link to="/apropos" className="inline-flex items-center gap-2">
+                                    En savoir plus
+                                    <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
+                                </Link>
+                            </Button>
                         </div>
                     </div>
 
@@ -63,9 +93,14 @@ const About = () => {
                     <div className="lg:w-1/2 relative animate-fade-in-right">
                         <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
                             <img
-                                src={aboutImage}
+                                src={aboutImageSrc}
                                 alt="Nos Formations Mayelia Academy"
                                 className="w-full h-[400px] object-cover transform hover:scale-105 transition-transform duration-700"
+                                width={1476}
+                                height={1200}
+                                loading="lazy"
+                                decoding="async"
+                                style={{ aspectRatio: '1.23 / 1' }}
                             />
                             {/* Overlay Gradient */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -73,6 +108,19 @@ const About = () => {
                         {/* Decorative Elements */}
                         <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-secondary rounded-full blur-2xl opacity-60"></div>
                         <div className="absolute -top-6 -right-6 w-32 h-32 bg-primary rounded-full blur-3xl opacity-40"></div>
+                    </div>
+                </div>
+
+                {/* Pédagogie - bande pleine largeur pour occuper l'espace sous l'image */}
+                <div className="rounded-3xl bg-gradient-to-br from-primary/5 via-background to-secondary/5 border border-primary/10 p-8 md:p-12 mb-16 animate-fade-in-up">
+                    <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+                        <h3 className="font-poppins font-bold text-foreground text-2xl md:text-3xl md:w-72 shrink-0">
+                            {s.homeAboutPedagogyHeading}
+                        </h3>
+                        <div className="space-y-4 text-muted-foreground font-opensans text-lg leading-relaxed">
+                            <p>{s.homeAboutPedagogyText}</p>
+                            <p>{s.homeAboutClosingText}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -85,7 +133,7 @@ const About = () => {
                     <div className="relative z-10">
                         <div className="text-center max-w-3xl mx-auto mb-10">
                             <h3 className="text-2xl md:text-3xl font-poppins font-bold text-foreground mb-3">
-                                Une approche <span className="text-primary italic">structurée</span> pour exceller
+                                Une approche <span className="text-primary not-italic">structurée</span> pour exceller
                             </h3>
                             <div className="w-16 h-1 bg-primary/20 mx-auto rounded-full overflow-hidden">
                                 <div className="w-1/2 h-full bg-primary rounded-full"></div>
