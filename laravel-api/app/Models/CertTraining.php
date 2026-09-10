@@ -9,7 +9,7 @@ class CertTraining extends Model
 {
     protected $table = 'cert_trainings';
 
-    protected $fillable = ['title', 'client', 'start_date', 'end_date', 'issue_place', 'issue_date'];
+    protected $fillable = ['title', 'client', 'start_date', 'end_date', 'training_place', 'issue_place', 'issue_date'];
 
     protected $casts = [
         'start_date' => 'date',

@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Loader2, Download, FileText, Trash2, UserPlus, Plus } from 'lucide-react';
+import { ArrowLeft, Loader2, Download, FileText, Award, Trash2, UserPlus, Plus, Search } from 'lucide-react';
 import { adminApi, type CertTrainingDetail, type CertParticipant } from '@/lib/api';
 import { getAdminToken } from './adminSession';
 import { Button } from '@/components/ui/button';
@@ -37,6 +37,7 @@ import {
   adminTableRow,
   adminTableWrap,
 } from './adminUi';
+import AdminPagination from './AdminPagination';
 
 type PendingToggle = {
   certId: number;
@@ -44,6 +45,8 @@ type PendingToggle = {
   nextValidated: boolean;
   note: string | null;
 };
+
+const PER_PAGE = 10;
 
 const AdminCertTrainingDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -57,6 +60,9 @@ const AdminCertTrainingDetailPage = () => {
   const [togglingCert, setTogglingCert] = useState(false);
   const [draftNotes, setDraftNotes] = useState<Record<number, string>>({});
   const [savingNoteId, setSavingNoteId] = useState<number | null>(null);
+  const [signatureBusyIds, setSignatureBusyIds] = useState<Set<number>>(new Set());
+  const [tableSearch, setTableSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const load = useCallback(() => {
     const token = getAdminToken();
@@ -112,6 +118,20 @@ const AdminCertTrainingDetailPage = () => {
     }
   };
 
+  const toggleSignature = async (certId: number, nextShowSignature: boolean) => {
+    const token = getAdminToken();
+    if (!token) return;
+    setSignatureBusyIds((s) => new Set(s).add(certId));
+    try {
+      await adminApi.setCertificateShowSignature(certId, nextShowSignature, token);
+      load();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : 'Erreur');
+    } finally {
+      setSignatureBusyIds((s) => { const next = new Set(s); next.delete(certId); return next; });
+    }
+  };
+
   const removeCertificate = async (certId: number) => {
     const token = getAdminToken();
     if (!token || !confirm('Retirer ce participant de la formation ?')) return;
@@ -159,6 +179,19 @@ const AdminCertTrainingDetailPage = () => {
 
   const validatedCount = training.certificates.filter((c) => c.validated).length;
 
+  const tq = tableSearch.trim().toLowerCase();
+  const filteredCertificates = tq
+    ? training.certificates.filter((c) =>
+        `${c.participant.civility} ${c.participant.full_name} ${c.ref ?? ''}`.toLowerCase().includes(tq)
+      )
+    : training.certificates;
+
+  const totalPages = Math.max(1, Math.ceil(filteredCertificates.length / PER_PAGE));
+  // Pas de useEffect ici (après les retours conditionnels) : on borne la page courante
+  // directement au lieu de la stocker désynchronisée après un filtrage/suppression.
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const paginatedCertificates = filteredCertificates.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+
   return (
     <div className="space-y-6 max-w-4xl">
       <Button variant="ghost" asChild className={adminBackButton}>
@@ -173,7 +206,9 @@ const AdminCertTrainingDetailPage = () => {
           <h1 className={adminPageTitle}>{training.title}</h1>
           <p className={adminMuted}>
             {training.client ? `${training.client} — ` : ''}
-            {training.start_date} → {training.end_date} · Délivré à {training.issue_place} le {training.issue_date}
+            {training.start_date} → {training.end_date}
+            {training.training_place ? ` à ${training.training_place}` : ''}
+            {' '}· Délivré à {training.issue_place} le {training.issue_date}
           </p>
         </div>
         <div className="flex gap-2 shrink-0">
@@ -201,6 +236,17 @@ const AdminCertTrainingDetailPage = () => {
           L'<strong>attestation de fin de formation</strong> est disponible pour tous les participants inscrits.
           Le <strong>certificat</strong> (avec référence officielle) n'est généré qu'après validation.
         </p>
+        <div className="relative max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          <Input
+            type="search"
+            value={tableSearch}
+            onChange={(e) => { setTableSearch(e.target.value); setPage(1); }}
+            placeholder="Rechercher un participant ou une référence..."
+            className="pl-9 bg-white border-slate-200"
+            aria-label="Rechercher un participant inscrit"
+          />
+        </div>
         <div className={adminTableWrap}>
           <Table>
             <TableHeader>
@@ -208,12 +254,13 @@ const AdminCertTrainingDetailPage = () => {
                 <TableHead className="text-slate-700 font-semibold">Participant</TableHead>
                 <TableHead className="text-slate-700 font-semibold">Note</TableHead>
                 <TableHead className="text-slate-700 font-semibold">Validé</TableHead>
+                <TableHead className="text-slate-700 font-semibold">Signature</TableHead>
                 <TableHead className="text-slate-700 font-semibold">Référence</TableHead>
                 <TableHead className="text-slate-700 font-semibold text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {training.certificates.map((c) => (
+              {paginatedCertificates.map((c) => (
                 <TableRow key={c.id} className={adminTableRow}>
                   <TableCell className={adminTableCell}>{c.participant.civility} {c.participant.full_name}</TableCell>
                   <TableCell className={adminTableCell}>
@@ -271,35 +318,51 @@ const AdminCertTrainingDetailPage = () => {
                       }
                     />
                   </TableCell>
+                  <TableCell>
+                    <Switch
+                      checked={c.show_signature}
+                      disabled={signatureBusyIds.has(c.id)}
+                      onCheckedChange={(checked) => toggleSignature(c.id, checked)}
+                    />
+                  </TableCell>
                   <TableCell className={adminTableCell}>
                     {c.ref ?? (
                       <Badge className="bg-amber-100 text-amber-900 font-opensans text-xs border-0">En attente</Badge>
                     )}
                   </TableCell>
-                  <TableCell className="text-right space-x-2">
+                  <TableCell className="text-right space-x-1 whitespace-nowrap">
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="text-slate-700 font-opensans"
+                      size="icon"
+                      className="text-slate-700 hover:bg-slate-100 h-9 w-9"
+                      title="Télécharger l'attestation"
+                      aria-label="Télécharger l'attestation"
                       onClick={() => {
                         const token = getAdminToken();
                         if (token) adminApi.downloadAttestationPdf(c.id, c.participant.full_name, token);
                       }}
                     >
-                      <FileText className="w-3 h-3 mr-1" />
-                      Attest.
+                      <FileText className="w-4 h-4" />
                     </Button>
                     <Button
                       variant="ghost"
-                      size="sm"
-                      className="text-primary hover:text-primary disabled:opacity-30 font-opensans"
+                      size="icon"
+                      className="text-primary hover:text-primary hover:bg-primary/10 disabled:opacity-30 h-9 w-9"
                       disabled={!c.validated || !c.ref}
+                      title="Télécharger le certificat"
+                      aria-label="Télécharger le certificat"
                       onClick={() => c.ref && downloadPdf(c.id, c.ref)}
                     >
-                      <FileText className="w-3 h-3 mr-1" />
-                      Certif.
+                      <Award className="w-4 h-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => removeCertificate(c.id)}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 h-9 w-9"
+                      title="Retirer ce participant"
+                      aria-label="Retirer ce participant"
+                      onClick={() => removeCertificate(c.id)}
+                    >
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </TableCell>
@@ -307,11 +370,23 @@ const AdminCertTrainingDetailPage = () => {
               ))}
             </TableBody>
           </Table>
-          {training.certificates.length === 0 && (
-            <p className="p-8 text-center text-slate-600 font-opensans">Aucun participant inscrit pour cette formation.</p>
+          {filteredCertificates.length === 0 && (
+            <p className="p-8 text-center text-slate-600 font-opensans">
+              {training.certificates.length === 0
+                ? 'Aucun participant inscrit pour cette formation.'
+                : 'Aucun résultat pour cette recherche.'}
+            </p>
           )}
         </div>
       </div>
+
+      <AdminPagination
+        page={currentPage}
+        totalPages={totalPages}
+        totalItems={filteredCertificates.length}
+        onPageChange={setPage}
+        itemLabel="participant"
+      />
 
       {/* Inscription de nouveaux participants */}
       <div className={`space-y-4 ${adminFormCard}`}>

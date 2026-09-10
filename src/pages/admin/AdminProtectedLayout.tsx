@@ -13,6 +13,8 @@ import {
   MessageSquareText,
   Images,
   Users,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
@@ -21,6 +23,9 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { canAccessModule, clearAdminToken, getAdminToken, getAdminUser, isSuperAdmin, setAdminUser } from './adminSession';
 import { SEO } from '@/components/SEO';
+import { cn } from '@/lib/utils';
+
+const SIDEBAR_COLLAPSED_KEY = 'admin-sidebar-collapsed';
 
 const nav: { to: string; label: string; icon: typeof LayoutDashboard; end?: boolean; module?: AdminModule; superAdminOnly?: boolean }[] = [
   { to: '/admin', label: 'Tableau de bord', icon: LayoutDashboard, end: true },
@@ -55,6 +60,21 @@ const AdminProtectedLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   // Sessions ouvertes avant l'ajout des permissions : pas encore d'utilisateur en cache.
   const [userLoaded, setUserLoaded] = useState(() => getAdminUser() !== null);
+  const [collapsed, setCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
+    } catch {
+      // stockage indisponible (navigation privée…) — pas bloquant
+    }
+  }, [collapsed]);
 
   useEffect(() => {
     if (userLoaded || !token) return;
@@ -99,7 +119,7 @@ const AdminProtectedLayout = () => {
     return <Navigate to="/admin" replace />;
   }
 
-  const NavLinks = ({ onNavigate }: { onNavigate?: () => void }) => (
+  const NavLinks = ({ onNavigate, iconOnly = false }: { onNavigate?: () => void; iconOnly?: boolean }) => (
     <nav className="flex flex-col gap-1 p-4">
       {visibleNav.map((item) => {
         const active = item.end
@@ -110,20 +130,25 @@ const AdminProtectedLayout = () => {
             key={item.to}
             to={item.to}
             onClick={onNavigate}
-            className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-opensans font-semibold transition-colors ${
-              active
-                ? 'bg-primary text-primary-foreground shadow-md'
-                : 'text-slate-700 hover:bg-slate-100'
-            }`}
+            title={iconOnly ? item.label : undefined}
+            className={cn(
+              'flex items-center gap-3 rounded-xl py-3 text-sm font-opensans font-semibold transition-colors',
+              iconOnly ? 'justify-center px-0' : 'px-4',
+              active ? 'bg-primary text-primary-foreground shadow-md' : 'text-slate-700 hover:bg-slate-100'
+            )}
           >
             <item.icon className="w-5 h-5 shrink-0" />
-            {item.label}
+            {!iconOnly && item.label}
           </Link>
         );
       })}
       <Button
         variant="ghost"
-        className="justify-start gap-3 mt-6 text-red-600 hover:text-red-700 hover:bg-red-50"
+        title={iconOnly ? 'Déconnexion' : undefined}
+        className={cn(
+          'mt-6 text-red-600 hover:text-red-700 hover:bg-red-50',
+          iconOnly ? 'justify-center px-0' : 'justify-start gap-3'
+        )}
         onClick={() => {
           clearAdminToken();
           onNavigate?.();
@@ -131,24 +156,42 @@ const AdminProtectedLayout = () => {
         }}
       >
         <LogOut className="w-5 h-5" />
-        Déconnexion
+        {!iconOnly && 'Déconnexion'}
       </Button>
     </nav>
   );
 
   return (
-    <div className="min-h-screen flex bg-slate-100 text-slate-900">
+    <div className="fixed inset-0 flex bg-slate-100 text-slate-900 overflow-hidden">
       <SEO title="Administration" description="Gestion du contenu Mayelia Academy" canonical="/admin" />
-      <aside className="hidden lg:flex lg:w-64 flex-col border-r border-slate-200 bg-white shadow-sm">
-        <div className="p-6 border-b border-slate-200">
-          <p className="font-poppins font-bold text-lg text-slate-900">Mayelia CMS</p>
-          <p className="text-xs text-slate-500 mt-1 font-opensans">Contenu site — mode clair</p>
+      <aside
+        className={cn(
+          'hidden lg:flex flex-col border-r border-slate-200 bg-white shadow-sm h-full shrink-0 overflow-y-auto transition-[width] duration-200',
+          collapsed ? 'lg:w-20' : 'lg:w-64'
+        )}
+      >
+        <div className={cn('flex items-center border-b border-slate-200 gap-2', collapsed ? 'justify-center p-4' : 'justify-between p-6')}>
+          {!collapsed && (
+            <div className="min-w-0">
+              <p className="font-poppins font-bold text-lg text-slate-900">Mayelia CMS</p>
+              <p className="text-xs text-slate-500 mt-1 font-opensans">Contenu site — mode clair</p>
+            </div>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="shrink-0 text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+            onClick={() => setCollapsed((c) => !c)}
+            title={collapsed ? 'Déplier le menu' : 'Réduire le menu'}
+          >
+            {collapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
+          </Button>
         </div>
-        <NavLinks />
+        <NavLinks iconOnly={collapsed} />
       </aside>
 
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="lg:hidden flex items-center justify-between p-4 border-b border-slate-200 bg-white sticky top-0 z-40 shadow-sm">
+      <div className="flex-1 flex flex-col min-w-0 min-h-0">
+        <header className="lg:hidden flex items-center justify-between p-4 border-b border-slate-200 bg-white sticky top-0 z-40 shadow-sm shrink-0">
           <span className="font-poppins font-bold text-slate-900">Mayelia Admin</span>
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
@@ -165,7 +208,7 @@ const AdminProtectedLayout = () => {
           </Sheet>
         </header>
 
-        <main className="flex-1 p-4 md:p-8 overflow-auto">
+        <main className="flex-1 min-h-0 p-4 md:p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500">
             <Outlet />
           </div>

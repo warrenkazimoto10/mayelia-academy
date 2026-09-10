@@ -78,6 +78,8 @@
         <div>a suivi avec succès la formation <strong>{{ $trainingTitle }}</strong></div>
         <div>dans la période du {{ $period }}.</div>
     </div>
+        {{-- <div class="box en-foi" style="font-size: 19px;">En foi de quoi, le présent certificat lui est délivré pour servir et valoir ce que de droit.</div> --}}
+
 
     <div class="box date">Fait à {{ $issuePlace }}, le {{ $issueDateText }}.</div>
 

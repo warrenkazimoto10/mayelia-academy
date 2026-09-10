@@ -34,4 +34,19 @@ class FrenchDate
 
         return self::format($start).' au '.self::format($end);
     }
+
+    /**
+     * Phrase complète avec préfixe, telle qu'elle apparaît dans le paragraphe de
+     * formation du modèle de certificat validé par le client :
+     * - même jour : "Le 30 mai 2026"
+     * - période : "Du 27 au 29 mai 2026" / "Du 27 mai 2026 au 3 juin 2026"
+     */
+    public static function formatPeriodPhrase(CarbonInterface $start, CarbonInterface $end): string
+    {
+        if ($start->isSameDay($end)) {
+            return 'Le '.self::format($start);
+        }
+
+        return 'Du '.self::formatPeriod($start, $end);
+    }
 }

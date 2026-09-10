@@ -34,8 +34,11 @@ class AttestationPdfBuilder
         $bgPath = base_path('public/certificates/attestation-bg.png');
         $bgBase64 = base64_encode((string) file_get_contents($bgPath));
 
-        $sigPath = \Illuminate\Support\Facades\Storage::disk('public')->path('certificates/signature.png');
-        $signatureBase64 = file_exists($sigPath) ? base64_encode((string) file_get_contents($sigPath)) : null;
+        $signatureBase64 = null;
+        if ($certificate->show_signature) {
+            $sigPath = \Illuminate\Support\Facades\Storage::disk('public')->path('certificates/signature.png');
+            $signatureBase64 = file_exists($sigPath) ? base64_encode((string) file_get_contents($sigPath)) : null;
+        }
 
         $verifyUrl = rtrim((string) config('certificates.verify_base_url'), '/').'/verification';
         $qrSvg = QrCode::format('svg')->size(256)->margin(0)->generate($verifyUrl);

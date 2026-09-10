@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, Pencil, Trash2, Loader2, Search } from 'lucide-react';
 import { adminApi, type CertParticipant } from '@/lib/api';
@@ -24,11 +24,15 @@ import {
   adminTableRow,
   adminTableWrap,
 } from './adminUi';
+import AdminPagination from './AdminPagination';
+
+const PER_PAGE = 10;
 
 const AdminCertParticipantsPage = () => {
   const [items, setItems] = useState<CertParticipant[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const load = (q?: string) => {
     const token = getAdminToken();
@@ -45,6 +49,7 @@ const AdminCertParticipantsPage = () => {
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setPage(1);
     load(search.trim() || undefined);
   };
 
@@ -60,6 +65,17 @@ const AdminCertParticipantsPage = () => {
     }
   };
 
+  const totalPages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * PER_PAGE;
+    return items.slice(start, start + PER_PAGE);
+  }, [items, page]);
+
   if (loading) {
     return (
       <div className="flex justify-center py-24">
@@ -70,7 +86,7 @@ const AdminCertParticipantsPage = () => {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <Button variant="ghost" asChild className="-ml-2 text-muted-foreground hover:text-primary">
+      <Button variant="ghost" asChild className="-ml-2 text-muted-foreground hover:bg-transparent hover:text-muted-foreground">
         <Link to="/admin/certificats">← Retour aux formations</Link>
       </Button>
 
@@ -110,13 +126,13 @@ const AdminCertParticipantsPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((p) => (
+            {paginated.map((p) => (
               <TableRow key={p.id} className={adminTableRow}>
                 <TableCell className={adminTableCell}>{p.civility}</TableCell>
                 <TableCell className={adminTableCell}>{p.full_name}</TableCell>
                 <TableCell className={`${adminTableCellMuted} hidden md:table-cell`}>{p.certificates_count ?? 0}</TableCell>
                 <TableCell className="text-right space-x-2">
-                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary">
+                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary hover:bg-primary/10">
                     <Link to={`/admin/certificats/participants/${p.id}`}>
                       <Pencil className="w-4 h-4" />
                     </Link>
@@ -135,9 +151,19 @@ const AdminCertParticipantsPage = () => {
           </TableBody>
         </Table>
         {items.length === 0 && (
-          <p className="p-8 text-center text-slate-600 font-opensans">Aucun participant en base.</p>
+          <p className="p-8 text-center text-slate-600 font-opensans">
+            {search.trim() ? 'Aucun résultat pour cette recherche.' : 'Aucun participant en base.'}
+          </p>
         )}
       </div>
+
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        totalItems={items.length}
+        onPageChange={setPage}
+        itemLabel="participant"
+      />
     </div>
   );
 };

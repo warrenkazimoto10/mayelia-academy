@@ -91,8 +91,15 @@ class CertificateController extends Controller
             return response()->json(['success' => false, 'error' => 'Certificat non trouvé'], 404);
         }
 
+        // Une note vide ("") signifie "pas de note" — on la normalise avant validation
+        // pour ne pas la faire échouer sur la règle "numeric".
+        if ($request->input('note') === '') {
+            $request->merge(['note' => null]);
+        }
+
         $data = $request->validate([
-            'validated' => 'required|boolean'
+            'validated' => 'required|boolean',
+            'note' => 'nullable|numeric|between:0,20',
         ]);
 
         $validated = $data['validated'];
@@ -106,12 +113,41 @@ class CertificateController extends Controller
             $certificate->validated = false;
             $certificate->ref = null;
         }
+        if (array_key_exists('note', $data)) {
+            $certificate->note = $data['note'];
+        }
         $certificate->save();
 
         return response()->json([
             'success' => true,
             'data' => $this->serialize($certificate->refresh()->load('participant', 'training')),
             'message' => $validated ? 'Participant validé, certificat généré' : 'Validation retirée',
+        ]);
+    }
+
+    /**
+     * Active/désactive la signature du président sur le certificat/attestation
+     * d'un participant précis (indépendamment des autres participants de la
+     * même formation).
+     */
+    public function setShowSignature(Request $request, string $id)
+    {
+        $certificate = Certificate::find($id);
+        if (! $certificate) {
+            return response()->json(['success' => false, 'error' => 'Certificat non trouvé'], 404);
+        }
+
+        $data = $request->validate([
+            'show_signature' => 'required|boolean',
+        ]);
+
+        $certificate->show_signature = $data['show_signature'];
+        $certificate->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->serialize($certificate->refresh()->load('participant', 'training')),
+            'message' => $data['show_signature'] ? 'Signature activée' : 'Signature désactivée',
         ]);
     }
 
@@ -236,6 +272,8 @@ class CertificateController extends Controller
             'id' => $c->id,
             'ref' => $c->ref,
             'validated' => (bool) $c->validated,
+            'show_signature' => (bool) $c->show_signature,
+            'note' => $c->note !== null ? (string) $c->note : null,
             'created_at' => $c->created_at?->toIso8601String(),
             'participant' => $c->relationLoaded('participant') && $c->participant ? [
                 'id' => $c->participant->id,
@@ -248,6 +286,7 @@ class CertificateController extends Controller
                 'client' => $c->training->client,
                 'start_date' => $c->training->start_date->toDateString(),
                 'end_date' => $c->training->end_date->toDateString(),
+                'training_place' => $c->training->training_place,
                 'issue_place' => $c->training->issue_place,
                 'issue_date' => $c->training->issue_date->toDateString(),
                 'period_text' => FrenchDate::formatPeriod($c->training->start_date, $c->training->end_date),

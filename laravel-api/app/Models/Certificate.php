@@ -9,10 +9,12 @@ class Certificate extends Model
 {
     protected $table = 'certificates';
 
-    protected $fillable = ['ref', 'validated', 'cert_participant_id', 'cert_training_id'];
+    protected $fillable = ['ref', 'validated', 'show_signature', 'note', 'cert_participant_id', 'cert_training_id'];
 
     protected $casts = [
         'validated' => 'boolean',
+        'show_signature' => 'boolean',
+        'note' => 'decimal:2',
     ];
 
     public function participant(): BelongsTo

@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Loader2, ShieldCheck } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ShieldCheck, Search } from 'lucide-react';
 import { adminApi, type AdminUser } from '@/lib/api';
 import { getAdminToken, getAdminUser } from './adminSession';
 import { MODULE_LABELS } from './adminModules';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import {
@@ -23,11 +24,16 @@ import {
   adminTableRow,
   adminTableWrap,
 } from './adminUi';
+import AdminPagination from './AdminPagination';
+
+const PER_PAGE = 10;
 
 const AdminUsersPage = () => {
   const [items, setItems] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const currentUser = getAdminUser();
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const load = () => {
     const token = getAdminToken();
@@ -54,6 +60,24 @@ const AdminUsersPage = () => {
     }
   };
 
+  const q = search.trim().toLowerCase();
+  const filtered = q ? items.filter((u) => `${u.name} ${u.email}`.toLowerCase().includes(q)) : items;
+
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * PER_PAGE;
+    return filtered.slice(start, start + PER_PAGE);
+  }, [filtered, page]);
+
   if (loading) {
     return (
       <div className="flex justify-center py-24">
@@ -79,6 +103,18 @@ const AdminUsersPage = () => {
         </Button>
       </div>
 
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+        <Input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Rechercher par nom ou e-mail..."
+          className="pl-9 bg-white border-slate-200"
+          aria-label="Rechercher un utilisateur"
+        />
+      </div>
+
       <div className={adminTableWrap}>
         <Table>
           <TableHeader>
@@ -90,7 +126,7 @@ const AdminUsersPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((u) => (
+            {paginated.map((u) => (
               <TableRow key={u.id} className={adminTableRow}>
                 <TableCell className={adminTableCell}>
                   {u.name}
@@ -118,7 +154,7 @@ const AdminUsersPage = () => {
                   )}
                 </TableCell>
                 <TableCell className="text-right space-x-2">
-                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary">
+                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary hover:bg-primary/10">
                     <Link to={`/admin/utilisateurs/${u.id}`}>
                       <Pencil className="w-4 h-4" />
                     </Link>
@@ -137,10 +173,20 @@ const AdminUsersPage = () => {
             ))}
           </TableBody>
         </Table>
-        {items.length === 0 && (
-          <p className="p-8 text-center text-slate-600 font-opensans">Aucun utilisateur en base.</p>
+        {filtered.length === 0 && (
+          <p className="p-8 text-center text-slate-600 font-opensans">
+            {items.length === 0 ? 'Aucun utilisateur en base.' : 'Aucun résultat pour cette recherche.'}
+          </p>
         )}
       </div>
+
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        totalItems={filtered.length}
+        onPageChange={setPage}
+        itemLabel="utilisateur"
+      />
     </div>
   );
 };

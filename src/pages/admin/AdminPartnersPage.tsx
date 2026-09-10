@@ -107,7 +107,7 @@ const AdminPartnersPage = () => {
                   )}
                 </div>
                 <div className="flex items-center gap-0.5 shrink-0">
-                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary h-9 w-9">
+                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary hover:bg-primary/10 h-9 w-9">
                     <Link to={`/admin/partenaires/${p.id}`} aria-label={`Modifier ${p.name}`}>
                       <Pencil className="w-4 h-4" />
                     </Link>

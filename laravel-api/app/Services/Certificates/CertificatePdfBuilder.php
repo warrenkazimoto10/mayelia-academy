@@ -13,10 +13,11 @@ class CertificatePdfBuilder
 
     private const PAGE_HEIGHT_PT = 8.26736 * 72;
 
-    // Coordonnées extraites du modèle original (en pouces, origine haut-gauche)
-    private const NAME_BOX = ['x' => 3.04635, 'w' => 5.67865];
+    // Coordonnées extraites du modèle .odp validé par le client (en pouces, origine haut-gauche)
+    private const NAME_BOX = ['x' => 1.9848, 'w' => 7.7231];
 
-    private const REF_BOX = ['x' => 3.3151, 'y' => 6.57778, 'h' => 0.37025];
+    // Remontée au-dessus du QR code (le QR passe en dessous, les deux alignés sur le même axe).
+    private const REF_BOX = ['x' => 1.15506, 'y' => 6.76556, 'w' => 3.124, 'h' => 0.40594];
 
     public function __construct(private TextWrapper $textWrapper)
     {
@@ -36,17 +37,21 @@ class CertificatePdfBuilder
         $qrSvg = QrCode::format('svg')->size(256)->margin(0)->generate($verifyUrl);
         $qrBase64 = base64_encode($qrSvg);
 
+        // QR code centré en dessous de la référence (les deux alignés sur le même axe vertical).
         $qrSizePt = 42;
-        $qrGapPt = 14;
-        $qrLeftIn = self::REF_BOX['x'] - ($qrGapPt + $qrSizePt) / 72;
-        $refCenterYIn = self::REF_BOX['y'] + self::REF_BOX['h'] / 2;
-        $qrTopIn = $refCenterYIn - ($qrSizePt / 2) / 72;
+        $qrGapPt = 8;
+        $refCenterXIn = self::REF_BOX['x'] + self::REF_BOX['w'] / 2;
+        $qrLeftIn = $refCenterXIn - ($qrSizePt / 2) / 72;
+        $qrTopIn = self::REF_BOX['y'] + self::REF_BOX['h'] + $qrGapPt / 72;
 
         $bgPath = base_path('public/certificates/certificate-bg.png');
         $bgBase64 = base64_encode((string) file_get_contents($bgPath));
 
-        $sigPath = \Illuminate\Support\Facades\Storage::disk('public')->path('certificates/signature.png');
-        $signatureBase64 = file_exists($sigPath) ? base64_encode((string) file_get_contents($sigPath)) : null;
+        $signatureBase64 = null;
+        if ($certificate->show_signature) {
+            $sigPath = \Illuminate\Support\Facades\Storage::disk('public')->path('certificates/signature.png');
+            $signatureBase64 = file_exists($sigPath) ? base64_encode((string) file_get_contents($sigPath)) : null;
+        }
 
         $html = view('certificates.pdf', [
             'bgBase64' => $bgBase64,
@@ -58,7 +63,8 @@ class CertificatePdfBuilder
             'nameText' => $nameText,
             'nameFontSize' => $nameFontSize,
             'trainingTitle' => $training->title,
-            'period' => FrenchDate::formatPeriod($training->start_date, $training->end_date),
+            'periodPhrase' => FrenchDate::formatPeriodPhrase($training->start_date, $training->end_date),
+            'trainingPlace' => $training->training_place ?: $training->issue_place,
             'issuePlace' => $training->issue_place,
             'issueDateText' => FrenchDate::format($training->issue_date),
             'ref' => $certificate->ref,

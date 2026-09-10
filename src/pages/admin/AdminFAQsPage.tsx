@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Loader2, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, ChevronUp, ChevronDown, Search } from 'lucide-react';
 import { adminApi, type Faq } from '@/lib/api';
 import { getAdminToken } from './adminSession';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import {
@@ -22,11 +23,16 @@ import {
   adminTableRow,
   adminTableWrap,
 } from './adminUi';
+import AdminPagination from './AdminPagination';
+
+const PER_PAGE = 10;
 
 const AdminFAQsPage = () => {
   const [items, setItems] = useState<Faq[]>([]);
   const [loading, setLoading] = useState(true);
   const [reordering, setReordering] = useState(false);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const load = () => {
     const token = getAdminToken();
@@ -80,6 +86,26 @@ const AdminFAQsPage = () => {
   const publishedCount = items.filter((f) => f.published).length;
   const draftCount = items.length - publishedCount;
 
+  // L'ordre (flèches haut/bas) reste basé sur la position réelle dans la liste complète,
+  // même quand une recherche ou une pagination n'affiche qu'un sous-ensemble.
+  const q = search.trim().toLowerCase();
+  const filtered = q ? items.filter((f) => `${f.question} ${f.answer}`.toLowerCase().includes(q)) : items;
+
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * PER_PAGE;
+    return filtered.slice(start, start + PER_PAGE);
+  }, [filtered, page]);
+
   if (loading) {
     return (
       <div className="flex justify-center py-24">
@@ -106,6 +132,18 @@ const AdminFAQsPage = () => {
         </Button>
       </div>
 
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+        <Input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Rechercher une question..."
+          className="pl-9 bg-white border-slate-200"
+          aria-label="Rechercher une FAQ"
+        />
+      </div>
+
       <div className={adminTableWrap}>
         <Table>
           <TableHeader>
@@ -117,7 +155,9 @@ const AdminFAQsPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((faq, index) => (
+            {paginated.map((faq) => {
+              const index = items.findIndex((f) => f.id === faq.id);
+              return (
               <TableRow key={faq.id} className={adminTableRow}>
                 <TableCell className="w-12">
                   <div className="flex flex-col gap-0.5">
@@ -150,7 +190,7 @@ const AdminFAQsPage = () => {
                   )}
                 </TableCell>
                 <TableCell className="text-right space-x-2">
-                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary">
+                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary hover:bg-primary/10">
                     <Link to={`/admin/faq/${faq.id}`}>
                       <Pencil className="w-4 h-4" />
                     </Link>
@@ -165,13 +205,24 @@ const AdminFAQsPage = () => {
                   </Button>
                 </TableCell>
               </TableRow>
-            ))}
+              );
+            })}
           </TableBody>
         </Table>
-        {items.length === 0 && (
-          <p className="p-8 text-center text-slate-600 font-opensans">Aucune question en base.</p>
+        {filtered.length === 0 && (
+          <p className="p-8 text-center text-slate-600 font-opensans">
+            {items.length === 0 ? 'Aucune question en base.' : 'Aucun résultat pour cette recherche.'}
+          </p>
         )}
       </div>
+
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        totalItems={filtered.length}
+        onPageChange={setPage}
+        itemLabel="question"
+      />
     </div>
   );
 };

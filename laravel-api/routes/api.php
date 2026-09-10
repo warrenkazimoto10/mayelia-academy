@@ -115,6 +115,7 @@ Route::middleware(['auth:sanctum', 'module:certificats'])->group(function () {
     Route::get('/certificates/{id}/pdf', [CertificateController::class, 'pdf']);
     Route::get('/certificates/{id}/attestation', [CertificateController::class, 'attestation']);
     Route::patch('/certificates/{id}/validate', [CertificateController::class, 'setValidated']);
+    Route::patch('/certificates/{id}/signature', [CertificateController::class, 'setShowSignature']);
 });
 
 Route::middleware(['auth:sanctum', 'module:reglages'])->group(function () {

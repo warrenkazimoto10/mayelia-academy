@@ -73,6 +73,7 @@ export interface CertTraining {
   client: string | null;
   start_date: string;
   end_date: string;
+  training_place: string | null;
   issue_place: string;
   issue_date: string;
   certificates_count?: number;
@@ -84,6 +85,7 @@ export interface CertTrainingDetail extends CertTraining {
     ref: string | null;
     validated: boolean;
     note: string | null;
+    show_signature: boolean;
     participant: { id: number; civility: string; full_name: string };
   }[];
 }
@@ -109,6 +111,7 @@ export interface Certificate {
   ref: string | null;
   validated: boolean;
   note: string | null;
+  show_signature: boolean;
   created_at: string;
   participant: { id: number; civility: string; full_name: string } | null;
   training: {
@@ -117,6 +120,7 @@ export interface Certificate {
     client: string | null;
     start_date: string;
     end_date: string;
+    training_place: string | null;
     issue_place: string;
     issue_date: string;
     period_text: string;
@@ -548,7 +552,7 @@ export const adminApi = {
     adminFetch<CertTrainingDetail>(`/cert-trainings/${id}`, token),
 
   saveCertTraining: (
-    payload: { title: string; client: string | null; start_date: string; end_date: string; issue_place: string; issue_date: string },
+    payload: { title: string; client: string | null; start_date: string; end_date: string; training_place: string | null; issue_place: string; issue_date: string },
     token: string,
     id?: number | string
   ) => {
@@ -589,6 +593,12 @@ export const adminApi = {
     adminFetch<Certificate>(`/certificates/${id}/validate`, token, {
       method: 'PATCH',
       body: JSON.stringify(payload),
+    }),
+
+  setCertificateShowSignature: (id: number, show_signature: boolean, token: string) =>
+    adminFetch<Certificate>(`/certificates/${id}/signature`, token, {
+      method: 'PATCH',
+      body: JSON.stringify({ show_signature }),
     }),
 
   downloadCertificatePdf: (id: number, ref: string, token: string) =>

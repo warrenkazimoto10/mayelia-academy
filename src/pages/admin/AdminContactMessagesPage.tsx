@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -8,8 +8,10 @@ import {
   EyeOff,
   Trash2,
   MessageSquareText,
+  Search,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Dialog,
   DialogContent,
@@ -39,6 +41,7 @@ import {
   adminTableRow,
   adminTableWrap,
 } from './adminUi';
+import AdminPagination from './AdminPagination';
 
 function formatDate(iso: string) {
   try {
@@ -51,10 +54,14 @@ function formatDate(iso: string) {
   }
 }
 
+const PER_PAGE = 10;
+
 const AdminContactMessagesPage = () => {
   const [items, setItems] = useState<ContactMessageRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState<ContactMessageRow | null>(null);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const load = () => {
     const token = getAdminToken();
@@ -97,6 +104,26 @@ const AdminContactMessagesPage = () => {
     }
   };
 
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? items.filter((row) => `${row.name} ${row.email} ${row.phone ?? ''} ${row.message}`.toLowerCase().includes(q))
+    : items;
+
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * PER_PAGE;
+    return filtered.slice(start, start + PER_PAGE);
+  }, [filtered, page]);
+
   if (loading && items.length === 0) {
     return (
       <div className="flex justify-center py-24">
@@ -129,6 +156,18 @@ const AdminContactMessagesPage = () => {
         </Button>
       </div>
 
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+        <Input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Rechercher par nom, email ou message..."
+          className="pl-9 bg-white border-slate-200"
+          aria-label="Rechercher un message"
+        />
+      </div>
+
       <div className={adminTableWrap}>
         <Table>
           <TableHeader>
@@ -141,9 +180,9 @@ const AdminContactMessagesPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((row) => (
+            {paginated.map((row) => (
               <TableRow key={row.id} className={adminTableRow}>
-                <TableCell className={adminTableCellMuted}>{formatDate(row.createdAt)}</TableCell>
+                <TableCell className={`${adminTableCellMuted} whitespace-nowrap`}>{formatDate(row.createdAt)}</TableCell>
                 <TableCell className={adminTableCell}>
                   <button
                     type="button"
@@ -192,10 +231,20 @@ const AdminContactMessagesPage = () => {
             ))}
           </TableBody>
         </Table>
-        {items.length === 0 && (
-          <p className="p-8 text-center text-slate-600 font-opensans">Aucun message pour le moment.</p>
+        {filtered.length === 0 && (
+          <p className="p-8 text-center text-slate-600 font-opensans">
+            {items.length === 0 ? 'Aucun message pour le moment.' : 'Aucun résultat pour cette recherche.'}
+          </p>
         )}
       </div>
+
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        totalItems={filtered.length}
+        onPageChange={setPage}
+        itemLabel="message"
+      />
 
       <Dialog open={!!detail} onOpenChange={(o) => !o && setDetail(null)}>
         <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">

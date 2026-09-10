@@ -6,9 +6,10 @@ use Dompdf\Dompdf;
 use Dompdf\FontMetrics;
 
 /**
- * Détermine la taille de police du nom (28pt par défaut, repli à 22pt si le nom
- * ne tient pas en 2 lignes dans la zone NAME_BOX). Le rendu réel (retour à la
- * ligne, centrage) est ensuite laissé à dompdf/CSS dans le template Blade.
+ * Détermine la taille de police du nom (32pt par défaut, conforme au modèle
+ * validé par le client ; repli à 25pt si le nom ne tient pas en 2 lignes dans
+ * la zone NAME_BOX). Le rendu réel (retour à la ligne, centrage) est ensuite
+ * laissé à dompdf/CSS dans le template Blade.
  */
 class TextWrapper
 {
@@ -19,12 +20,12 @@ class TextWrapper
         $this->fontMetrics = (new Dompdf())->getFontMetrics();
     }
 
-    /** @return int 28 ou 22 selon que le nom tient en 2 lignes à 28pt */
+    /** @return int 32 ou 25 selon que le nom tient en 2 lignes à 32pt */
     public function resolveNameFontSize(string $text, float $maxWidthPt): int
     {
-        $lineCountAt28 = $this->countWrappedLines($text, 'helvetica', 'bold', 28, $maxWidthPt);
+        $lineCountAt32 = $this->countWrappedLines($text, 'helvetica', 'bold', 32, $maxWidthPt);
 
-        return $lineCountAt28 <= 2 ? 28 : 22;
+        return $lineCountAt32 <= 2 ? 32 : 25;
     }
 
     private function countWrappedLines(string $text, string $family, string $weight, int $size, float $maxWidthPt): int

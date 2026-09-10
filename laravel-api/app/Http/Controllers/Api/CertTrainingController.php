@@ -30,6 +30,8 @@ class CertTrainingController extends Controller
             'id' => $c->id,
             'ref' => $c->ref,
             'validated' => (bool) $c->validated,
+            'show_signature' => (bool) $c->show_signature,
+            'note' => $c->note !== null ? (string) $c->note : null,
             'participant' => [
                 'id' => $c->participant->id,
                 'civility' => $c->participant->civility,
@@ -86,6 +88,7 @@ class CertTrainingController extends Controller
             'client' => 'nullable|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'training_place' => 'nullable|string|max:255',
             'issue_place' => 'required|string|max:255',
             'issue_date' => 'required|date',
         ]);
@@ -99,6 +102,7 @@ class CertTrainingController extends Controller
             'client' => $t->client,
             'start_date' => $t->start_date->toDateString(),
             'end_date' => $t->end_date->toDateString(),
+            'training_place' => $t->training_place,
             'issue_place' => $t->issue_place,
             'issue_date' => $t->issue_date->toDateString(),
             'certificates_count' => $t->certificates_count ?? $t->certificates()->count(),

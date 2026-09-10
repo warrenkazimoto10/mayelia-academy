@@ -30,6 +30,7 @@ const AdminCertTrainingEditPage = () => {
   const [client, setClient] = useState('');
   const [startDate, setStartDate] = useState(defaultIsoToday);
   const [endDate, setEndDate] = useState(defaultIsoToday);
+  const [trainingPlace, setTrainingPlace] = useState('');
   const [issuePlace, setIssuePlace] = useState('Abidjan');
   const [issueDate, setIssueDate] = useState(defaultIsoToday);
 
@@ -44,6 +45,7 @@ const AdminCertTrainingEditPage = () => {
         setClient(t.client || '');
         setStartDate(t.start_date);
         setEndDate(t.end_date);
+        setTrainingPlace(t.training_place || '');
         setIssuePlace(t.issue_place);
         setIssueDate(t.issue_date);
       })
@@ -61,6 +63,7 @@ const AdminCertTrainingEditPage = () => {
       client: client.trim() || null,
       start_date: startDate,
       end_date: endDate,
+      training_place: trainingPlace.trim() || null,
       issue_place: issuePlace.trim() || 'Abidjan',
       issue_date: issueDate,
     };
@@ -122,6 +125,22 @@ const AdminCertTrainingEditPage = () => {
           <AdminDatePickerField id="tr-end" label="Date de fin" isoValue={endDate} onIsoChange={setEndDate} required />
         </div>
 
+        <div className="grid gap-2">
+          <Label htmlFor="tr-training-place" className={adminLabel}>
+            Lieu de la formation
+          </Label>
+          <Input
+            id="tr-training-place"
+            value={trainingPlace}
+            onChange={(e) => setTrainingPlace(e.target.value)}
+            className={adminInput}
+            placeholder="Ex. Fadyadougou"
+          />
+          <p className="text-xs text-slate-500">
+            Ville où la formation s'est déroulée — affichée sur le certificat ("... le [date] à [lieu]."). Laissez vide pour reprendre le lieu de délivrance.
+          </p>
+        </div>
+
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="grid gap-2">
             <Label htmlFor="tr-place" className={adminLabel}>
@@ -131,6 +150,10 @@ const AdminCertTrainingEditPage = () => {
           </div>
           <AdminDatePickerField id="tr-issue" label="Date de délivrance" isoValue={issueDate} onIsoChange={setIssueDate} required />
         </div>
+
+        <p className="text-xs text-slate-500">
+          La signature du président se règle désormais par participant, depuis la liste des inscrits de cette formation.
+        </p>
 
         <div className="flex gap-3 pt-4 border-t border-slate-200">
           <Button variant="outline" className="font-opensans font-semibold" onClick={() => navigate('/admin/certificats')}>

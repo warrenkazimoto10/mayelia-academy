@@ -197,6 +197,7 @@ class CertificateSeeder extends Seeder
                 'title' => 'ICAM',
                 'start_date' => '2026-05-27',
                 'end_date' => '2026-05-29',
+                'training_place' => 'Fadyadougou',
                 'participants' => [
                     'Kodjo Laurent', 'Ebrottie Kouadio Joel', "N'Depo Akichi Cyrille Narcisse",
                     'Tetialy Kablan Richard', 'Kossonou Yao Kouman Eric', 'Bamba Ismail',
@@ -208,6 +209,7 @@ class CertificateSeeder extends Seeder
                 'title' => 'Lead investigator',
                 'start_date' => '2026-05-30',
                 'end_date' => '2026-05-30',
+                'training_place' => 'Fadyadougou',
                 'participants' => [
                     'Kodjo Laurent', 'Ebrottie Kouadio Joel', "N'Depo Akichi Cyrille Narcisse",
                     'Tetialy Kablan Richard', 'Kossonou Yao Kouman Eric', 'Bamba Ismail',
@@ -248,6 +250,11 @@ class CertificateSeeder extends Seeder
                 'client' => $session['client'],
                 'start_date' => $session['start_date'],
                 'end_date' => $session['end_date'],
+                // Lieu où la formation s'est réellement déroulée (distinct du lieu de
+                // délivrance) — connu uniquement pour K1 Mining SA / ICAM et Lead
+                // investigator d'après le modèle de certificat fourni. Laissé à null pour
+                // les autres sessions : le certificat retombe alors sur issue_place.
+                'training_place' => $session['training_place'] ?? null,
                 'issue_place' => 'Abidjan',
                 'issue_date' => $session['end_date'],
             ]);

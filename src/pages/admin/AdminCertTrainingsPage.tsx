@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Loader2, Users, ListChecks, Upload, PenLine } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, Users, ListChecks, Upload, PenLine, Search } from 'lucide-react';
 import { adminApi, type CertTraining } from '@/lib/api';
 import { getAdminToken } from './adminSession';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import {
@@ -23,6 +24,9 @@ import {
   adminTableRow,
   adminTableWrap,
 } from './adminUi';
+import AdminPagination from './AdminPagination';
+
+const PER_PAGE = 10;
 
 const AdminCertTrainingsPage = () => {
   const [items, setItems] = useState<CertTraining[]>([]);
@@ -30,6 +34,8 @@ const AdminCertTrainingsPage = () => {
   const [signatureUrl, setSignatureUrl] = useState<string | null>(null);
   const [sigUploading, setSigUploading] = useState(false);
   const sigInputRef = useRef<HTMLInputElement>(null);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const load = () => {
     const token = getAdminToken();
@@ -79,6 +85,26 @@ const AdminCertTrainingsPage = () => {
       toast.error(e instanceof Error ? e.message : 'Erreur');
     }
   };
+
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? items.filter((t) => `${t.title} ${t.client ?? ''}`.toLowerCase().includes(q))
+    : items;
+
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * PER_PAGE;
+    return filtered.slice(start, start + PER_PAGE);
+  }, [filtered, page]);
 
   if (loading) {
     return (
@@ -151,6 +177,18 @@ const AdminCertTrainingsPage = () => {
         </div>
       </div>
 
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+        <Input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Rechercher par titre ou client..."
+          className="pl-9 bg-white border-slate-200"
+          aria-label="Rechercher une formation"
+        />
+      </div>
+
       <div className={adminTableWrap}>
         <Table>
           <TableHeader>
@@ -163,15 +201,20 @@ const AdminCertTrainingsPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((t) => (
+            {paginated.map((t) => (
               <TableRow key={t.id} className={adminTableRow}>
                 <TableCell className={adminTableCell}>
                   <Link to={`/admin/certificats/formations/${t.id}`} className="hover:text-primary">
                     {t.title}
                   </Link>
                 </TableCell>
-                <TableCell className={`${adminTableCellMuted} hidden lg:table-cell`}>{t.client || '—'}</TableCell>
-                <TableCell className={`${adminTableCellMuted} hidden md:table-cell`}>
+                <TableCell
+                  className={`${adminTableCellMuted} hidden lg:table-cell max-w-[180px] truncate`}
+                  title={t.client || undefined}
+                >
+                  {t.client || '—'}
+                </TableCell>
+                <TableCell className={`${adminTableCellMuted} hidden md:table-cell whitespace-nowrap`}>
                   {t.start_date} → {t.end_date}
                 </TableCell>
                 <TableCell>
@@ -180,7 +223,7 @@ const AdminCertTrainingsPage = () => {
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right space-x-2">
-                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary">
+                  <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary hover:bg-primary/10">
                     <Link to={`/admin/certificats/formations/${t.id}/modifier`}>
                       <Pencil className="w-4 h-4" />
                     </Link>
@@ -198,10 +241,20 @@ const AdminCertTrainingsPage = () => {
             ))}
           </TableBody>
         </Table>
-        {items.length === 0 && (
-          <p className="p-8 text-center text-slate-600 font-opensans">Aucune formation en base.</p>
+        {filtered.length === 0 && (
+          <p className="p-8 text-center text-slate-600 font-opensans">
+            {items.length === 0 ? 'Aucune formation en base.' : 'Aucun résultat pour cette recherche.'}
+          </p>
         )}
       </div>
+
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        totalItems={filtered.length}
+        onPageChange={setPage}
+        itemLabel="formation"
+      />
     </div>
   );
 };

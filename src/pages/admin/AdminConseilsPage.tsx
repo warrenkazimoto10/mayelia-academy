@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, Search } from 'lucide-react';
 import { adminApi, type Conseil } from '@/lib/api';
 import { getAdminToken } from './adminSession';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import {
@@ -23,10 +24,15 @@ import {
   adminTableRow,
   adminTableWrap,
 } from './adminUi';
+import AdminPagination from './AdminPagination';
+
+const PER_PAGE = 10;
 
 const AdminConseilsPage = () => {
   const [items, setItems] = useState<Conseil[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
 
   const load = () => {
     const token = getAdminToken();
@@ -49,6 +55,24 @@ const AdminConseilsPage = () => {
 
   const draftCount = items.filter((a) => a.published === false).length;
   const publishedCount = items.filter((a) => a.published !== false).length;
+
+  const q = search.trim().toLowerCase();
+  const filtered = q ? items.filter((a) => `${a.title} ${a.date}`.toLowerCase().includes(q)) : items;
+
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * PER_PAGE;
+    return filtered.slice(start, start + PER_PAGE);
+  }, [filtered, page]);
 
   const remove = async (id: string | number) => {
     const token = getAdminToken();
@@ -88,6 +112,18 @@ const AdminConseilsPage = () => {
         </Button>
       </div>
 
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+        <Input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Rechercher par titre ou date..."
+          className="pl-9 bg-white border-slate-200"
+          aria-label="Rechercher un conseil"
+        />
+      </div>
+
       <div className={adminTableWrap}>
         <Table>
           <TableHeader>
@@ -99,12 +135,12 @@ const AdminConseilsPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((a) => {
+            {paginated.map((a) => {
               const isDraft = a.published === false;
               return (
                 <TableRow key={a.id} className={adminTableRow}>
                   <TableCell className={adminTableCell}>{a.title}</TableCell>
-                  <TableCell className={`${adminTableCellMuted} hidden lg:table-cell`}>{a.date}</TableCell>
+                  <TableCell className={`${adminTableCellMuted} hidden lg:table-cell whitespace-nowrap`}>{a.date}</TableCell>
                   <TableCell>
                     {isDraft ? (
                       <Badge className="bg-amber-100 text-amber-900 font-opensans text-xs border-0">Brouillon</Badge>
@@ -113,7 +149,7 @@ const AdminConseilsPage = () => {
                     )}
                   </TableCell>
                   <TableCell className="text-right space-x-2">
-                    <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary">
+                    <Button variant="ghost" size="icon" asChild className="text-primary hover:text-primary hover:bg-primary/10">
                       <Link to={`/admin/conseils/${a.id}`}>
                         <Pencil className="w-4 h-4" />
                       </Link>
@@ -132,10 +168,20 @@ const AdminConseilsPage = () => {
             })}
           </TableBody>
         </Table>
-        {items.length === 0 && (
-          <p className="p-8 text-center text-slate-600 font-opensans">Aucun conseil en base.</p>
+        {filtered.length === 0 && (
+          <p className="p-8 text-center text-slate-600 font-opensans">
+            {items.length === 0 ? 'Aucun conseil en base.' : 'Aucun résultat pour cette recherche.'}
+          </p>
         )}
       </div>
+
+      <AdminPagination
+        page={page}
+        totalPages={totalPages}
+        totalItems={filtered.length}
+        onPageChange={setPage}
+        itemLabel="conseil"
+      />
     </div>
   );
 };
