@@ -15,11 +15,10 @@
         text-align: center;
         line-height: 1.4;
     }
-    /* "Le présent document atteste que" — juste sous le séparateur du haut (~49%) */
     .intro {
-        left: 2in; top: 3.85in;
+        left: 2in; top: 3.68in;
         width: 7.7in; height: 0.42in;
-        font-size: 15pt; color: #2c3e50;
+        font-size: 18pt; color: #2c3e50;
     }
     /* Nom du participant (~55%) */
     .name {
@@ -31,37 +30,36 @@
     .formation {
         left: 1.2in; top: 5.1in;
         width: 9.3in; height: 0.95in;
-        font-size: 15pt; color: #2c3e50;
+        font-size: 18pt; color: #2c3e50;
         flex-direction: column; gap: 4px;
     }
-    /* "Fait à X, le DATE" — juste au-dessus du séparateur du bas (~75%) */
+    .en-foi { left: 1.09028in; top: 6.09in; width: 9.44444in; height: 0.33659in; font-size: 14pt;
+    color: #2c3e50; }
     .date {
-        left: 3in; top: 6.15in;
-        width: 5.7in; height: 0.42in;
+        left: 3in; top: 7.1in;
+        width: 5.6in; height: 0.42in;
         font-size: 15pt; color: #2c3e50;
     }
-    /* Texte "LE PRÉSIDENT" en bas à droite */
-    .president-text {
-        position: absolute;
-        left: 7.3in; top: 6.0in;
-        width: 3in;
-        text-align: center;
-        font-size: 14pt;
-        font-weight: bold;
-        color: #2c3e50;
+    .president {
+        left: 7.9in; top: 6.6in;
+        width: 3in; height: 0.3in;
+        font-size: 18pt; color: #2c3e50;
     }
-    /* Signature — centrée juste en dessous du titre "LE PRÉSIDENT" */
     .signature {
         position: absolute;
-        left: 7.3in; top: 6.4in;
+        left: 7.4in; top: 6.95in;
         width: 3in;
-        height: 1.2in;
+        height: 0.7in;
         object-fit: contain;
     }
-    /* QR code — bas gauche */
+    .signataire {
+        left: 7.9in; top: 7.68in;
+        width: 3in; height: 0.35in;
+        font-size: 13pt; color: #2c3e50;
+    }
     .qr {
         position: absolute;
-        left: 0.45in; top: 6.1in;
+        left: 2.5in; top: 7.0in;
         width: {{ $qrSizeIn }}in;
         height: {{ $qrSizeIn }}in;
     }
@@ -75,19 +73,22 @@
     <div class="box name" style="font-size: {{ $nameFontSize }}pt">{{ $nameText }}</div>
 
     <div class="box formation">
-        <div>a suivi avec succès la formation <strong>{{ $trainingTitle }}</strong></div>
-        <div>dans la période du {{ $period }}.</div>
+        <div>a suivi avec succès la formation <strong>{{ $trainingTitle }}</strong>.</div>
+        <div>{{ $period }} à {{ $trainingPlace }}.</div>
     </div>
-        {{-- <div class="box en-foi" style="font-size: 19px;">En foi de quoi, le présent certificat lui est délivré pour servir et valoir ce que de droit.</div> --}}
 
+    <div class="box en-foi">
+En foi de quoi, la présente attestation lui est délivrée pour servir et valoir ce que de droit.</div>
 
     <div class="box date">Fait à {{ $issuePlace }}, le {{ $issueDateText }}.</div>
 
-    <div class="president-text">LE PRÉSIDENT</div>
+    <div class="box president" style="font-size: 18px;">Le Président</div>
 
     @if($signatureBase64)
         <img class="signature" src="data:image/png;base64,{{ $signatureBase64 }}" alt="Signature">
     @endif
+
+    <div class="box signataire">Dominique GOUVERNAYRE</div>
 
     <img class="qr" src="data:image/svg+xml;base64,{{ $qrBase64 }}" alt="">
 </body>

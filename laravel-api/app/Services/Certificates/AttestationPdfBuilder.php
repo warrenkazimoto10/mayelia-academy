@@ -53,7 +53,9 @@ class AttestationPdfBuilder
             'nameText' => $nameText,
             'nameFontSize' => $nameFontSize,
             'trainingTitle' => $training->title,
-            'period' => FrenchDate::formatPeriod($training->start_date, $training->end_date),
+            // "Le 10 septembre 2026" si un seul jour, "Du 10 septembre 2026 au 10 novembre 2026" si période.
+            'period' => FrenchDate::formatPeriodPhrase($training->start_date, $training->end_date),
+            'trainingPlace' => $training->training_place ?: $training->issue_place,
             'issuePlace' => $training->issue_place,
             'issueDateText' => FrenchDate::format($training->issue_date),
         ])->render();

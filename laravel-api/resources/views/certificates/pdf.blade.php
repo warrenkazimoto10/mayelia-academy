@@ -20,13 +20,20 @@
     .name { left: 1.9848in; top: 3.29135in; width: 7.7231in; height: 0.63952in; font-weight: bold; color: #000; }
     .formation { left: 1.9848in; top: 4.15813in; width: 7.7231in; height: 1.3127in; font-size: 18pt; color: #000; flex-direction: column; }
     .formation .training-title { font-weight: bold; }
-    .en-foi { left: 1.09028in; top: 5.43704in; width: 9.44444in; height: 0.33659in; font-size: 14pt; color: #000; }
+    .en-foi { left: 1.09028in; top: 5.79in; width: 9.44444in; height: 0.33659in; font-size: 14pt; color: #000; }
     .ref { left: 1.15506in; top: 6.76556in; width: 3.124in; height: 0.40594in; font-size: 18pt; color: #000; }
     .date { left: 3.91519in; top: 6.928in; width: 3.79462in; height: 0.40391in; font-size: 18pt; color: #000; }
-    .signataire { left: 8in; top: 7.46in; width: 3.5in; height: 0.45in; font-size: 18pt; color: #000; }
+
+    .signataire {
+        left: 8in;
+top: 7.57in   ;
+   width: 3.5in;
+         height: 0.45in;
+         font-size: 18pt;
+          color: #000; }
 
     .president { left: 8in;
-        top: 6.55in;
+        top: 6.50in;
          width: 3.5in;
          height: 0.35in;
          font-size: 18pt;
@@ -38,7 +45,7 @@
 
     .signature {
         position: absolute;
-        left: 8.44in; top: 6.6in;
+       left: 7.9in; top: 6.80in;
         width: 2.6in; height: 0.8in;
         object-fit: contain;
     }
@@ -56,7 +63,8 @@
         <div>{{ $periodPhrase }} à {{ $trainingPlace }}.</div>
     </div>
 
-    <div class="box en-foi" >En foi de quoi, le présent certificat lui est délivré pour servir et valoir ce que de droit.</div>
+    <div class="box en-foi" >
+        En foi de quoi, le présent certificat lui est délivré pour servir et valoir ce que de droit.</div>
 
     <div class="box ref" style="font-size: 18px;">REF :{{ $ref }}</div>
 
